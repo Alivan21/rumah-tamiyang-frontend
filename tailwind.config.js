@@ -7,6 +7,9 @@ export const content = [
   "./src/**/*.{ts,tsx}",
 ];
 export const theme = {
+  fontFamily: {
+    sans: ["Inter", "sans-serif"],
+  },
   container: {
     center: true,
     padding: "2rem",
