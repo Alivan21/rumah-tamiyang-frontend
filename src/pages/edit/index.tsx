@@ -46,7 +46,7 @@ const Edit = () => {
                     </div>
                 </div>
                 <div className="mb-4" />
-                <button className="bg-[#094C30] text-white p-2 rounded-xl">Update Data</button>
+                <button className="bg-[#094C30] text-white p-2 rounded-xl lg:py-3">Update Data</button>
             </form>
         </div>
     );
