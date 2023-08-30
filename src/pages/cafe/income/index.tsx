@@ -6,7 +6,7 @@ const Income = () => {
     return (
         <div>
             <Sidebar />
-            <div className="px-8 flex flex-col lg:ml-64">
+            <main className="px-8 flex flex-col lg:ml-64">
                 <div className="overflow-x-auto">
                     <div className="flex items-center justify-between py-4">
                         <h2 className="text-lg p-4 rounded-t-xl">Daftar Pendapatan</h2>
@@ -40,7 +40,7 @@ const Income = () => {
                         )}
                     </table>
                 </div>
-            </div>
+            </main>
         </div>
     );
 }
