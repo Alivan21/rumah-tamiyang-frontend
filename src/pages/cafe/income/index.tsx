@@ -5,7 +5,7 @@ import Sidebar from "@/components/Sidebar";
 const Income = () => {
     return (
         <div>
-            <Sidebar />
+            <Sidebar title="Pendapatan" />
             <main className="px-8 flex flex-col lg:ml-64">
                 <div className="overflow-x-auto">
                     <div className="flex items-center justify-between py-4">

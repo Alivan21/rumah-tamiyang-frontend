@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import Logo from "@/assets/logo.png";
 
-function Sidebar() {
+interface IProps {
+  title: string;
+};
+
+function Sidebar({ title }: IProps) {
   const [open, setOpen] = useState(false);
 
   const handleOpenSidebar = () => {
@@ -11,7 +15,7 @@ function Sidebar() {
   return (
     <>
       <header className="flex items-center justify-between p-5 pt-5 md:ml-14 lg:ml-64">
-        <h1 className="text-lg font-bold">Dashboard</h1>
+        <h1 className="text-lg font-bold">{ title }</h1>
         <Button className="lg:hidden" size="sm" onClick={handleOpenSidebar}>
           {open ? <i className="fa-solid fa-bars"></i> : <i className="fa-solid fa-bars-staggered"></i>}
         </Button>

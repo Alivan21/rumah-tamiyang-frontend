@@ -11,7 +11,7 @@ function App() {
   ];
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
-      <Sidebar />
+      <Sidebar title="Dashboard" />
       <main className="container flex max-w-fit flex-col gap-5 p-5 pb-6 lg:ml-64">
         <section className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           <Card title="Pendapatan" value="Rp. 20.000.000" upPercent="50" icon="pendapatan" />

@@ -3,7 +3,7 @@ import Sidebar from "@/components/Sidebar";
 const AddIncome = () => {
     return (
         <>
-            <Sidebar />
+            <Sidebar title="Tambah Pendapatan" />
             <div className="py-8 px-8 lg:ml-64">
                 <form action="" className="flex flex-col gap-8">
                     <div>
