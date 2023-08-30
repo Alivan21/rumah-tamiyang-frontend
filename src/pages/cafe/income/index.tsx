@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BiSolidTrash, BiSolidEdit } from "react-icons/bi"
+import { BiSolidTrash, BiSolidEdit, BiSolidPlusCircle } from "react-icons/bi"
 import Sidebar from "@/components/Sidebar";
 
 const Income = () => {
@@ -11,6 +11,7 @@ const Income = () => {
                     <div className="flex items-center justify-between py-4">
                         <h2 className="text-lg p-4 rounded-t-xl">Daftar Pendapatan</h2>
                         <Link to="/income/add"><button className="hidden bg-primary text-white py-2 px-4 rounded-lg lg:block">+ Tambah Data Pendapatan</button></Link>
+                        <Link to="/income/add" className="text-2xl fixed bottom-8 right-4 bg-white rounded-full lg:hidden"><BiSolidPlusCircle size={50} /></Link>
                     </div>
                     <table className="w-full border border-separate border-spacing-11 rounded-xl lg:overflow-auto lg:w-full">
                         <tr className="leading-8 p-4">
