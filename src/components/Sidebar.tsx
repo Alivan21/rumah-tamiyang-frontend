@@ -1,21 +1,27 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import Logo from "@/assets/logo.png";
+import { NavLink, useLocation } from "react-router-dom";
 
-interface IProps {
-  title: string;
-};
-
-function Sidebar({ title }: IProps) {
+function Sidebar() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   const handleOpenSidebar = () => {
     setOpen(!open);
   };
+  const getTitle = () => {
+    if (location.pathname.split("/").length == 2) {
+      return "DASHBOARD";
+    } else {
+      return location.pathname.split("/")[2].toUpperCase();
+    }
+  };
+  const title = getTitle();
   return (
     <>
-      <header className="flex items-center justify-between p-5 pt-5 md:ml-14 lg:ml-64">
-        <h1 className="text-lg font-bold">{ title }</h1>
+      <header className="flex items-center justify-between p-5 md:ml-2 lg:ml-64">
+        <h1 className="text-lg font-bold">{title}</h1>
         <Button className="lg:hidden" size="sm" onClick={handleOpenSidebar}>
           {open ? <i className="fa-solid fa-bars"></i> : <i className="fa-solid fa-bars-staggered"></i>}
         </Button>
@@ -28,9 +34,12 @@ function Sidebar({ title }: IProps) {
       >
         <div className="text-xl text-gray-100">
           <div className="flex items-center justify-between p-3">
-            <div className="flex gap-2">
-              <img src={Logo} alt="logo" className="w-10 rounded-md bg-blue-500 px-2 py-1" />
-              <h1 className="my-auto text-[15px] font-bold text-gray-200">Rumah Tamiyang</h1>
+            <div className="flex items-center gap-6">
+              <img src={Logo} alt="logo" className="ml-2 w-12 rounded-md bg-blue-400 px-2 py-1" />
+              <h1 className="my-auto text-[15px] font-bold leading-tight text-gray-200">
+                Rumah Tamiyang <br />
+                {location.pathname.split("/")[1].toUpperCase()}
+              </h1>
             </div>
             <Button className="lg:hidden" size="sm" onClick={handleOpenSidebar}>
               <i className="fa-solid fa-xmark"></i>
@@ -39,9 +48,23 @@ function Sidebar({ title }: IProps) {
         </div>
         <div className="my-2 h-[1px] bg-gray-600"></div>
         <ul className="flex flex-col gap-3">
-          <li className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600">
-            <i className="fa-solid fa-home"></i>
-            <span className="ml-4 text-[15px] font-bold text-gray-200">Home</span>
+          <li>
+            <NavLink
+              to="/cafe"
+              className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600"
+            >
+              <i className="fa-solid fa-home"></i>
+              <span className="ml-4 text-[15px] font-bold text-gray-200">Home</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/cafe/income"
+              className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600"
+            >
+              <i className="fa-solid fa-coins"></i>
+              <span className="ml-4 text-[15px] font-bold text-gray-200">Pendapatan</span>
+            </NavLink>
           </li>
           <div className="h-[1px] bg-gray-600"></div>
           <li className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600">
