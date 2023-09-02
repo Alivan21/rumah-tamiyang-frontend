@@ -4,6 +4,11 @@ import Income from "@/pages/cafe/income";
 import AddIncome from "@/pages/cafe/income/add";
 import CafeLayout from "@/pages/cafe/layout";
 import Login from "@/pages/auth/login";
+import WorkspaceDashboard from "@/pages/workspace/dashboard";
+import WorkspaceLayout from "@/pages/workspace/layout";
+import WorkspaceIncome from "@/pages/workspace/income";
+import WorkspaceIncomeDetail from "@/pages/workspace/income/id";
+import AddIncomeWorkspace from "@/pages/workspace/income/add";
 
 export function AppRoutes() {
   return (
@@ -15,6 +20,12 @@ export function AppRoutes() {
           <Route index element={<Income />} />
           <Route path="add" element={<AddIncome />} />
         </Route>
+      </Route>
+      <Route element={<WorkspaceLayout />} path="/workspace">
+        <Route index element={<WorkspaceDashboard />} />
+        <Route path="income" element={<WorkspaceIncome />} />
+        <Route path="income/add" element={<AddIncomeWorkspace />} />
+        <Route path="income/1" element={<WorkspaceIncomeDetail />} />
       </Route>
     </Routes>
   );
