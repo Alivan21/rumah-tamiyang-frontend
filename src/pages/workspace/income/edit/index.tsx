@@ -1,7 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
-const AddIncomeWorkspace = () => {
+const WorksapceEditIncome = () => {
+    const { id } = useParams();
+    useEffect(() => {
+        console.log(id);
+    }, [])
     return (
         <>
             <div className="mb-3 flex items-center gap-3">
@@ -10,7 +15,7 @@ const AddIncomeWorkspace = () => {
                         <i className="fa-solid fa-arrow-left text-xl"></i>
                     </Button>
                 </Link>
-                <h1 className="text-xl font-semibold">Tambah Pendapatan</h1>
+                <h1 className="text-xl font-semibold">Edit Pendapatan</h1>
             </div>
             <form className="flex flex-col gap-8 mb-16">
                 <div>
@@ -112,4 +117,4 @@ const AddIncomeWorkspace = () => {
     );
 }
 
-export default AddIncomeWorkspace;
+export default WorksapceEditIncome;

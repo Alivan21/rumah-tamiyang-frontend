@@ -1,3 +1,4 @@
+import DeleteModal from "@/components/modals/DeleteModal";
 import { Button } from "@/components/ui/button";
 import { BiSolidEdit, BiSolidPlusCircle, BiSolidTrash, BiSolidShow } from "react-icons/bi";
 import { Link } from "react-router-dom";
@@ -5,7 +6,7 @@ import { Link } from "react-router-dom";
 const WorkspaceIncome = () => {
     return (
         <>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between relative">
                 <h2 className="p-2 text-lg font-semibold">Daftar Pendapatan</h2>
                 <Link to="/workspace/income/add">
                     <Button className="hidden rounded-lg bg-primary px-4 py-2 text-white lg:block">
@@ -45,14 +46,16 @@ const WorkspaceIncome = () => {
                                 <td className="px-6 py-4 text-center">Rp1,200,000</td>
                                 <td className="px-6 py-4 text-center">Rp300,000</td>
                                 <td className="px-6 py-4 text-center">30%</td>
-                                <td className="flex gap-2 lg:gap-0 px-6 py-4">
-                                    <Link to="/workspace/income/1" className="block m-auto w-fit cursor-pointer rounded-lg p-1 bg-primary"><BiSolidShow size={20} color="white" /></Link>
-                                    <div className="m-auto w-fit cursor-pointer rounded-lg bg-red-500 p-1">
-                                        <BiSolidTrash color="white" size={20} />
-                                    </div>
-                                    <div className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1">
+                                <td className="flex items-center gap-2 lg:gap-0 px-6 py-4">
+                                    <Link to={`/workspace/income/${num}`} className="block m-auto w-fit cursor-pointer rounded-lg p-1 bg-primary"><BiSolidShow size={20} color="white" /></Link>
+                                    <DeleteModal id={num}>
+                                        <div className="m-auto w-fit cursor-pointer rounded-lg bg-red-500 p-1">
+                                            <BiSolidTrash color="white" size={20} />
+                                        </div>
+                                    </DeleteModal>
+                                    <Link to={`/workspace/income/edit/${num}`} className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1">
                                         <BiSolidEdit color="white" size={20} />
-                                    </div>
+                                    </Link>
                                 </td>
                             </tr>
                         ))}
