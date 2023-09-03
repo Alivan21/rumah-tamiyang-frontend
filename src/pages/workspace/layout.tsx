@@ -8,7 +8,7 @@ const navs = [
         id: 1,
         labelText: "Home",
         labelIcon: <BiHome />,
-        url: "/"
+        url: "/workspace"
     }, {
         id: 2,
         labelText: "Pendapatan",

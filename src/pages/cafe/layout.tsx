@@ -1,10 +1,26 @@
 import Sidebar from "@/components/Sidebar";
+import { BiHome, BiMoney } from "react-icons/bi";
 import { Outlet } from "react-router-dom";
+
+const navs = [
+  {
+    id: 1,
+    labelText: "Home",
+    labelIcon: <BiHome />,
+    url: "/cafe"
+  },
+  {
+    id: 2,
+    labelText: "Pendapatan",
+    labelIcon: <BiMoney />,
+    url: "/cafe/income"
+  }
+];
 
 function CafeLayout() {
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
-      <Sidebar />
+      <Sidebar navs={navs} />
       <main className="max-w-3/4 container flex flex-col gap-5 p-5 pb-6 lg:ml-64 lg:w-3/4">
         <Outlet />
       </main>
