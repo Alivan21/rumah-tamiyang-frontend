@@ -1,9 +1,20 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import { Button } from "./ui/button";
 import Logo from "@/assets/logo.png";
 import { NavLink, useLocation } from "react-router-dom";
 
-function Sidebar() {
+type NavLink = {
+  id: number | string;
+  labelText: string;
+  labelIcon: ReactNode;
+  url: string;
+};
+
+type SidebarProps = {
+  navs: NavLink[];
+};
+
+function Sidebar({ navs }: SidebarProps) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
@@ -28,9 +39,8 @@ function Sidebar() {
       </header>
       <hr className="my-1" />
       <aside
-        className={`fixed bottom-0 top-0 z-10 w-64 overflow-y-auto bg-gray-900 p-2 text-center duration-300 ease-in-out lg:left-0 ${
-          open ? "-translate-x-full lg:translate-x-0" : "translate-x-0"
-        }`}
+        className={`fixed bottom-0 top-0 z-10 w-64 overflow-y-auto bg-gray-900 p-2 text-center duration-300 ease-in-out lg:left-0 ${open ? "-translate-x-full lg:translate-x-0" : "translate-x-0"
+          }`}
       >
         <div className="text-xl text-gray-100">
           <div className="flex items-center justify-between p-3">
@@ -48,24 +58,19 @@ function Sidebar() {
         </div>
         <div className="my-2 h-[1px] bg-gray-600"></div>
         <ul className="flex flex-col gap-3">
-          <li>
-            <NavLink
-              to="/cafe"
-              className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600"
-            >
-              <i className="fa-solid fa-home"></i>
-              <span className="ml-4 text-[15px] font-bold text-gray-200">Home</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/cafe/income"
-              className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600"
-            >
-              <i className="fa-solid fa-coins"></i>
-              <span className="ml-4 text-[15px] font-bold text-gray-200">Pendapatan</span>
-            </NavLink>
-          </li>
+          {navs.map(({ id, url, labelIcon, labelText }) => {
+            return (
+              <li key={id}>
+                <NavLink
+                  to={url}
+                  className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600"
+                >
+                  { labelIcon }
+                  <span className="ml-4 text-[15px] font-bold text-gray-200">{ labelText }</span>
+                </NavLink>
+              </li>
+            )
+          })}
           <div className="h-[1px] bg-gray-600"></div>
           <li className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600">
             <i className="fa-solid fa-right-from-bracket"></i>
