@@ -6,6 +6,7 @@ import { AppRoutesProvider } from "./routes";
 import { queryClient } from "./lib/react-query";
 import "./styles/global.css";
 import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "./contexts/AuthProvider";
 
 const root = document.getElementById("root") as HTMLElement;
 
@@ -13,7 +14,9 @@ createRoot(root).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <Toaster />
-      <AppRoutesProvider />
+      <AuthProvider>
+        <AppRoutesProvider />
+      </AuthProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
   </StrictMode>
