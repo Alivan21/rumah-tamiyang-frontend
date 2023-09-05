@@ -47,7 +47,7 @@ function Sidebar({ navs }: SidebarProps) {
             <div className="flex items-center gap-6">
               <img src={Logo} alt="logo" className="ml-2 w-12 rounded-md bg-blue-400 px-2 py-1" />
               <h1 className="my-auto text-[15px] font-bold leading-tight text-gray-200">
-                Rumah Tamiyang <br />
+                Rumah Tamiang <br />
                 {location.pathname.split("/")[1].toUpperCase()}
               </h1>
             </div>

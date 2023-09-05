@@ -6,7 +6,7 @@ const WorksapceEditIncome = () => {
     const { id } = useParams();
     useEffect(() => {
         console.log(id);
-    }, [])
+    }, [id])
     return (
         <>
             <div className="mb-3 flex items-center gap-3">

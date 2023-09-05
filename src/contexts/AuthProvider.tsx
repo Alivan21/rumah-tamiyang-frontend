@@ -21,7 +21,7 @@ const [useAuthContext, AuthProviderInternal] = createContext<AuthContextValue>({
 export { useAuthContext };
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [token, setToken] = useState<string | undefined>();
+  const [token, setToken] = useState<string | undefined>(localStorage.getItem("token") || undefined);
   const jwtPayload = useMemo(() => decodeJwt<AuthJwtPayload>(token), [token]);
 
   useEffect(() => {
