@@ -4,13 +4,14 @@ import Income from "@/pages/cafe/income";
 import AddIncome from "@/pages/cafe/income/add";
 import CafeLayout from "@/pages/cafe/layout";
 import Login from "@/pages/auth/login";
-import WorkspaceDashboard from "@/pages/workspace/dashboard";
-import WorkspaceLayout from "@/pages/workspace/layout";
-import WorkspaceIncome from "@/pages/workspace/income";
-import WorkspaceIncomeDetail from "@/pages/workspace/income/id";
-import AddIncomeWorkspace from "@/pages/workspace/income/add";
-import WorksapceEditIncome from "@/pages/workspace/income/edit";
+import WorkshopDashboard from "@/pages/workshop/dashboard";
+import WorkshopLayout from "@/pages/workshop/layout";
+import WorkshopIncome from "@/pages/workshop/income";
+import WorkshopIncomeDetail from "@/pages/workshop/income/id";
+import AddIncomeWorkshop from "@/pages/workshop/income/add";
+import WorkshopEditIncome from "@/pages/workshop/income/edit";
 import { PrivateRoutesGuard } from "./PrivateRoutesGuard";
+import WasteHouseLayout from "@/pages/wastehouse/layout";
 
 export function AppRoutes() {
   return (
@@ -24,12 +25,15 @@ export function AppRoutes() {
             <Route path="add" element={<AddIncome />} />
           </Route>
         </Route>
-        <Route element={<WorkspaceLayout />} path="workspace">
-          <Route index element={<WorkspaceDashboard />} />
-          <Route path="income" element={<WorkspaceIncome />} />
-          <Route path="income/add" element={<AddIncomeWorkspace />} />
-          <Route path="income/:id" element={<WorkspaceIncomeDetail />} />
-          <Route path="income/edit/:id" element={<WorksapceEditIncome />} />
+        <Route element={<WorkshopLayout />} path="workshop">
+          <Route index element={<WorkshopDashboard />} />
+          <Route path="income" element={<WorkshopIncome />} />
+          <Route path="income/add" element={<AddIncomeWorkshop />} />
+          <Route path="income/:id" element={<WorkshopIncomeDetail />} />
+          <Route path="income/edit/:id" element={<WorkshopEditIncome />} />
+        </Route>
+        <Route element={<WasteHouseLayout />} path="wastehouse">
+          {/* route for wastehouse */}
         </Route>
       </Route>
     </Routes>

@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { BiSolidEdit, BiSolidPlusCircle, BiSolidTrash, BiSolidShow } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-const WorkspaceIncome = () => {
+const WorkshopIncome = () => {
     return (
         <>
             <div className="flex items-center justify-between relative">
                 <h2 className="p-2 text-lg font-semibold">Daftar Pendapatan</h2>
-                <Link to="/workspace/income/add">
+                <Link to="/workshop/income/add">
                     <Button className="hidden rounded-lg bg-primary px-4 py-2 text-white lg:block">
                         + Tambah Data Pendapatan
                     </Button>
@@ -47,13 +47,13 @@ const WorkspaceIncome = () => {
                                 <td className="px-6 py-4 text-center">Rp300,000</td>
                                 <td className="px-6 py-4 text-center">30%</td>
                                 <td className="flex items-center gap-2 lg:gap-0 px-6 py-4">
-                                    <Link to={`/workspace/income/${num}`} className="block m-auto w-fit cursor-pointer rounded-lg p-1 bg-primary"><BiSolidShow size={20} color="white" /></Link>
+                                    <Link to={`/workshop/income/${num}`} className="block m-auto w-fit cursor-pointer rounded-lg p-1 bg-primary"><BiSolidShow size={20} color="white" /></Link>
                                     <DeleteModal id={num}>
                                         <div className="m-auto w-fit cursor-pointer rounded-lg bg-red-500 p-1">
                                             <BiSolidTrash color="white" size={20} />
                                         </div>
                                     </DeleteModal>
-                                    <Link to={`/workspace/income/edit/${num}`} className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1">
+                                    <Link to={`/workshop/income/edit/${num}`} className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1">
                                         <BiSolidEdit color="white" size={20} />
                                     </Link>
                                 </td>
@@ -61,7 +61,7 @@ const WorkspaceIncome = () => {
                         ))}
                     </tbody>
                 </table>
-                <Link to="/workspace/income/add" className="fixed bottom-1 right-1 rounded-full bg-white text-2xl lg:hidden">
+                <Link to="/workshop/income/add" className="fixed bottom-1 right-1 rounded-full bg-white text-2xl lg:hidden">
                     <BiSolidPlusCircle size={50} />
                 </Link>
             </div>
@@ -69,4 +69,4 @@ const WorkspaceIncome = () => {
     );
 }
 
-export default WorkspaceIncome;
+export default WorkshopIncome;

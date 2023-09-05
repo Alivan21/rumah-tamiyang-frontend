@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-function WorkspaceIncomeDetail() {
+function WorkshopIncomeDetail() {
     return (
         <main>
-            <Link to="/workspace/income" className="block mb-6">
+            <Link to="/workshop/income" className="block mb-6">
                 <Button className=" rounded-full p-3">
                     <i className="fa-solid fa-arrow-left text-xl"></i>
                 </Button>
@@ -46,4 +46,4 @@ function WorkspaceIncomeDetail() {
     );
 }
 
-export default WorkspaceIncomeDetail;
+export default WorkshopIncomeDetail;

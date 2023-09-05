@@ -1,4 +1,4 @@
-const WorkspaceDashboard = () => {
+const WorkshopDashboard = () => {
     return ( 
         <>
         This is a dashboard of workspace
@@ -6,4 +6,4 @@ const WorkspaceDashboard = () => {
      );
 }
  
-export default WorkspaceDashboard;
+export default WorkshopDashboard;

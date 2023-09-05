@@ -26,7 +26,7 @@ function Login() {
     // the temporaryRole is only for demo, it can be replace with 'role'
     if (temporaryRole === "ADMIN") navigate("/admin");
     else if (temporaryRole === "CAFE") navigate("/cafe");
-    else if (temporaryRole === "WORKSHOP") navigate("/workspace");
+    else if (temporaryRole === "WORKSHOP") navigate("/workshop");
   }, [role])
   return (
     <main className="container p-8">

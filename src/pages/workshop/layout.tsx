@@ -8,15 +8,15 @@ const navs = [
         id: 1,
         labelText: "Home",
         labelIcon: <BiHome />,
-        url: "/workspace"
+        url: "/workshop"
     }, {
         id: 2,
         labelText: "Pendapatan",
         labelIcon: <BiMoney />,
-        url: "/workspace/income"
+        url: "/workshop/income"
     }];
 
-function WorkspaceLayout() {
+function WorkshopLayout() {
     return (
         <div className="min-h-screen bg-gray-100 font-sans">
             <Sidebar navs={navs} />
@@ -28,4 +28,4 @@ function WorkspaceLayout() {
     );
 }
 
-export default WorkspaceLayout;
+export default WorkshopLayout;
