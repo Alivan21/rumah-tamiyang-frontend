@@ -12,6 +12,7 @@ import AddIncomeWorkshop from "@/pages/workshop/income/add";
 import WorkshopEditIncome from "@/pages/workshop/income/edit";
 import { PrivateRoutesGuard } from "./PrivateRoutesGuard";
 import WasteHouseLayout from "@/pages/wastehouse/layout";
+import EditCafeIncome from "@/pages/cafe/income/edit";
 
 export function AppRoutes() {
   return (
@@ -23,6 +24,7 @@ export function AppRoutes() {
           <Route path="income">
             <Route index element={<Income />} />
             <Route path="add" element={<AddIncome />} />
+            <Route path="edit/:id" element={<EditCafeIncome />} />
           </Route>
         </Route>
         <Route element={<WorkshopLayout />} path="workshop">

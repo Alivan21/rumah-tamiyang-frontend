@@ -102,9 +102,9 @@ function Income() {
                       <BiSolidTrash color="white" size={17} />
                     </DeleteModal>
                   </div>
-                  <div className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1">
+                  <Link to={`/cafe/income/edit/${income.id}`} className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1">
                     <BiSolidEdit color="white" size={20} />
-                  </div>
+                  </Link>
                 </td>
               </tr>
             ))}
