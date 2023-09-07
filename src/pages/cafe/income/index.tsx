@@ -1,8 +1,32 @@
 import { Link } from "react-router-dom";
 import { BiSolidTrash, BiSolidEdit, BiSolidPlusCircle } from "react-icons/bi";
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { http } from "@/utils/http";
+import { useEffect } from "react";
+
+export type cafeIncome = {
+  id: number;
+  revenue: number;
+  expense: number;
+  profit: number;
+};
 
 function Income() {
+  const { data } = useQuery({
+    queryKey: ["cafeIncome"],
+    queryFn: async () => {
+      const res = await http.get("/cafe/revenue?page=1&perPage=10", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+      return res.data.data;
+    }
+  });
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <>
       <div className="flex items-center justify-between">
@@ -38,13 +62,13 @@ function Income() {
             </tr>
           </thead>
           <tbody>
-            {[1, 2, 3, 4, 5, 6].map(num => (
-              <tr key={num} className="border-b bg-white">
-                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{num}</td>
-                <td className="px-6 py-4">28 Agustus 2023</td>
-                <td className="px-6 py-4">Rp1,200,000</td>
-                <td className="px-6 py-4">Rp300,000</td>
-                <td className="px-6 py-4">30%</td>
+            {data?.map((income: cafeIncome) => (
+              <tr key={income.id} className="border-b bg-white">
+                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{income.id}</td>
+                <td className="px-6 py-4">date</td>
+                <td className="px-6 py-4">{ income.revenue }</td>
+                <td className="px-6 py-4">{ income.expense }</td>
+                <td className="px-6 py-4">{ income.profit }%</td>
                 <td className="flex gap-3 px-6 py-4">
                   <div className="m-auto w-fit cursor-pointer rounded-lg bg-red-500 p-1">
                     <BiSolidTrash color="white" size={20} />

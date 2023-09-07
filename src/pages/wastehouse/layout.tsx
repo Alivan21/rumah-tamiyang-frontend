@@ -1,20 +1,20 @@
 import Sidebar from "@/components/Sidebar";
 import { Toaster } from "@/components/ui/toaster";
-import { BiHome,BiMoney } from "react-icons/bi";
+// import { BiHome,BiMoney } from "react-icons/bi";
 import { Outlet } from "react-router-dom";
 
-const navs = [
-    {
-        id: 1,
-        labelText: "Home",
-        labelIcon: <BiHome />,
-        url: "/workspace"
-    }, {
-        id: 2,
-        labelText: "Pendapatan",
-        labelIcon: <BiMoney />,
-        url: "/workspace/income"
-    }];
+// const navs = [
+//     {
+//         id: 1,
+//         labelText: "Home",
+//         labelIcon: <BiHome />,
+//         url: "/workspace"
+//     }, {
+//         id: 2,
+//         labelText: "Pendapatan",
+//         labelIcon: <BiMoney />,
+//         url: "/workspace/income"
+//     }];
 
 function WasteHouseLayout() {
     return (
