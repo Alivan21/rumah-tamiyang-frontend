@@ -48,7 +48,9 @@ const WorkshopIncome = () => {
                                 <td className="px-6 py-4 text-center">30%</td>
                                 <td className="flex items-center gap-2 lg:gap-0 px-6 py-4">
                                     <Link to={`/workshop/income/${num}`} className="block m-auto w-fit cursor-pointer rounded-lg p-1 bg-primary"><BiSolidShow size={20} color="white" /></Link>
-                                    <DeleteModal id={num}>
+                                    <DeleteModal id={num} deleteHandler={() => {
+                                        console.log("dihapus");
+                                    }}>
                                         <div className="m-auto w-fit cursor-pointer rounded-lg bg-red-500 p-1">
                                             <BiSolidTrash color="white" size={20} />
                                         </div>
