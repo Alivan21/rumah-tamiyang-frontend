@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { BiSolidEdit, BiSolidPlusCircle, BiSolidShow, BiSolidTrash } from "react-icons/bi";
+import { BiSolidPlusCircle, BiSolidShow, BiSolidEdit, BiSolidTrash } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-function WasteHouseProduction() {
+function WasteHouseIncome() {
     return (
         <>
             <div className="flex items-center justify-between">
-                <h2 className="p-2 text-lg font-semibold">Daftar Produksi Limbah</h2>
-                <Link to="/wastehouse/production/add">
+                <h2 className="p-2 text-lg font-semibold">Daftar Pendapatan Rumah Limbah</h2>
+                <Link to="/wastehouse/income/add">
                     <Button className="hidden rounded-lg bg-primary px-4 py-2 text-white lg:block">
-                        + Tambah Produksi Limbah
+                        + Tambah Data Pendapatan
                     </Button>
                 </Link>
             </div>
@@ -24,7 +24,7 @@ function WasteHouseProduction() {
                                 Tanggal
                             </th>
                             <th scope="col" className="px-6 py-3 text-center">
-                                Jumlah Produksi
+                                Jumlah Pendapatan
                             </th>
                             <th scope="col" className="px-6 py-3 text-center">
                                 Action
@@ -36,16 +36,16 @@ function WasteHouseProduction() {
                             <tr key={num} className="border-b bg-white">
                                 <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-center">1</td>
                                 <td className="px-6 py-4 text-center">12/12/1212</td>
-                                <td className="px-6 py-4 text-center">10</td>
+                                <td className="px-6 py-4 text-center">Rp1000000</td>
                                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                                     <Link
-                                        to={`/wastehouse/production/${1}`}
+                                        to={`/wastehouse/income/${1}`}
                                         className="m-auto w-fit cursor-pointer rounded-lg bg-green-500 p-1"
                                     >
                                         <BiSolidShow color="white" size={20} />
                                     </Link>
                                     <Link
-                                        to={`/wastehouse/production/edit/${1}`}
+                                        to={`/wastehouse/income/edit/${1}`}
                                         className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1"
                                     >
                                         <BiSolidEdit color="white" size={20} />
@@ -61,12 +61,12 @@ function WasteHouseProduction() {
                         )}
                     </tbody>
                 </table>
-                <Link to="/wastehouse/production/add" className="fixed bottom-1 right-1 rounded-full bg-white text-2xl lg:hidden">
+                <Link to="/wastehouse/income/add" className="fixed bottom-1 right-1 rounded-full bg-white text-2xl lg:hidden">
                     <BiSolidPlusCircle size={50} />
                 </Link>
             </div>
         </>
     )
-};
+}
 
-export default WasteHouseProduction;
+export default WasteHouseIncome;

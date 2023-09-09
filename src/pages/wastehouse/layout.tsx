@@ -1,6 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import { Toaster } from "@/components/ui/toaster";
-import { BiHome } from "react-icons/bi";
+import { BiHome, BiDollar } from "react-icons/bi";
 import { GiNuclearWaste } from "react-icons/gi";
 import { Outlet } from "react-router-dom";
 import { MdProductionQuantityLimits } from "react-icons/md"
@@ -31,6 +31,12 @@ const navs: NavsType[] = [
         labelText: "Produksi",
         labelIcon: <MdProductionQuantityLimits />,
         url: "/wastehouse/production"
+    },
+    {
+        id: 4,
+        labelText: "Pendapatan",
+        labelIcon: <BiDollar />,
+        url: "/wastehouse/income"
     }
 ];
 

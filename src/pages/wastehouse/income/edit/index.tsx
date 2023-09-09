@@ -1,17 +1,17 @@
 import { Button } from "@/components/ui/button";
+import { BiPlus } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import { BiPlus } from "react-icons/bi"
 
-function WasteHouseAddProduction() {
-    return (
-        <>
+function WasteHouseIncomeEdit() {
+  return (
+    <>
             <div className="mb-3 flex items-center gap-3">
-                <Link to="/wastehouse/production">
+                <Link to="/wastehouse/income">
                     <Button className=" rounded-full p-3">
                         <i className="fa-solid fa-arrow-left text-xl"></i>
                     </Button>
                 </Link>
-                <h1 className="text-xl font-semibold">Tambah Produksi</h1>
+                <h1 className="text-xl font-semibold">Tambah Income</h1>
             </div>
             <form className="flex flex-col gap-8">
                 <div>
@@ -64,33 +64,41 @@ function WasteHouseAddProduction() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <p className="text-lg mb-2">Produksi</p>
-                    <div className="flex items-center gap-2">
-                        <input
-                            className="w-1/3 rounded-lg border border-gray-300 p-3"
-                            type="number"
-                            id="detergent"
-                            name="detergent"
-                        />
-                        <p className="text-base">Sabun Cuci</p>
+                    <div>
+                        <p className="text-base mb-2">Sabun Cuci</p>
+                        <div className="flex items-center gap-2">
+                            <p>Rp</p>
+                            <input
+                                className="w-full rounded-lg border border-gray-300 p-3"
+                                type="number"
+                                id="detergent"
+                                name="detergent"
+                            />
+                        </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <input
-                            className="w-1/3 rounded-lg border border-gray-300 p-3"
-                            type="number"
-                            id="aromateraphy"
-                            name="aromateraphy"
-                        />
-                        <p className="text-base">Lilin Aromaterapi</p>
+                    <div>
+                        <p className="text-base mb-2">Lilin Aromaterapi</p>
+                        <div className="flex items-center gap-2">
+                            <p>Rp</p>
+                            <input
+                                className="w-full rounded-lg border border-gray-300 p-3"
+                                type="number"
+                                id="detergent"
+                                name="detergent"
+                            />
+                        </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <input
-                            className="w-1/3 rounded-lg border border-gray-300 p-3"
-                            type="number"
-                            id="aromateraphy"
-                            name="aromateraphy"
-                        />
-                        <p className="text-base">Lampu Pelita</p>
+                    <div>
+                        <p className="text-base mb-2">Lampu Pelita</p>
+                        <div className="flex items-center gap-2">
+                            <p>Rp</p>
+                            <input
+                                className="w-full rounded-lg border border-gray-300 p-3"
+                                type="number"
+                                id="detergent"
+                                name="detergent"
+                            />
+                        </div>
                     </div>
                     <div className="items-center">
                         <p className="text-base mb-2">Lain-lain</p>
@@ -102,10 +110,11 @@ function WasteHouseAddProduction() {
                 <Button
                     className="fixed bottom-6 left-1/2 mt-8 w-5/6 -translate-x-1/2 rounded-full bg-primary p-4 text-white lg:relative lg:w-full lg:rounded-xl lg:py-3"
                 >
+                    Tambah
                 </Button>
             </form>
         </>
-    );
+  )
 }
 
-export default WasteHouseAddProduction;
+export default WasteHouseIncomeEdit;

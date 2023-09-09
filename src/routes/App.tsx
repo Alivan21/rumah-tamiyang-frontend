@@ -21,6 +21,10 @@ import WasteHouseProduction from "@/pages/wastehouse/production";
 import WasteHouseProductionDetails from "@/pages/wastehouse/production/id";
 import WasteHouseAddProduction from "@/pages/wastehouse/production/add";
 import EditProductionWasteHouse from "@/pages/wastehouse/production/edit";
+import WasteHouseIncome from "@/pages/wastehouse/income";
+import WasteHouseIncomeAdd from "@/pages/wastehouse/income/add";
+import WasteHouseIncomeDetails from "@/pages/wastehouse/income/id";
+import WasteHouseIncomeEdit from "@/pages/wastehouse/income/edit";
 
 export function AppRoutes() {
   return (
@@ -52,6 +56,11 @@ export function AppRoutes() {
           <Route path="/wastehouse/production/add" element={<WasteHouseAddProduction />} />
           <Route path="/wastehouse/production/:id" element={<WasteHouseProductionDetails />} />
           <Route path="/wastehouse/production/edit/:id" element={<EditProductionWasteHouse />} />
+
+          <Route path="/wastehouse/income" element={<WasteHouseIncome />} />
+          <Route path="/wastehouse/income/add" element={<WasteHouseIncomeAdd />} />
+          <Route path="/wastehouse/income/:id" element={<WasteHouseIncomeDetails />} />
+          <Route path="/wastehouse/income/edit/:id" element={<WasteHouseIncomeEdit />} />
         </Route>
       </Route>
     </Routes>
