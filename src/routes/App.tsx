@@ -17,6 +17,10 @@ import AddWasteOil from "@/pages/wastehouse/waste-oil/add";
 import WasteOil from "@/pages/wastehouse/waste-oil";
 import WasteHouse from "@/pages/wastehouse/dashboard";
 import EditWasteOil from "@/pages/wastehouse/waste-oil/edit";
+import WasteHouseProduction from "@/pages/wastehouse/production";
+import WasteHouseProductionDetails from "@/pages/wastehouse/production/id";
+import WasteHouseAddProduction from "@/pages/wastehouse/production/add";
+import EditProductionWasteHouse from "@/pages/wastehouse/production/edit";
 
 export function AppRoutes() {
   return (
@@ -43,6 +47,11 @@ export function AppRoutes() {
           <Route path="waste-oil" element={<WasteOil />} />
           <Route path="/wastehouse/waste-oil/add" element={<AddWasteOil />} />
           <Route path="/wastehouse/waste-oil/edit/:id" element={<EditWasteOil />} />
+
+          <Route path="/wastehouse/production" element={<WasteHouseProduction />} />
+          <Route path="/wastehouse/production/add" element={<WasteHouseAddProduction />} />
+          <Route path="/wastehouse/production/:id" element={<WasteHouseProductionDetails />} />
+          <Route path="/wastehouse/production/edit/:id" element={<EditProductionWasteHouse />} />
         </Route>
       </Route>
     </Routes>

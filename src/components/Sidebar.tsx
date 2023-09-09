@@ -3,11 +3,12 @@ import { Button } from "./ui/button";
 import Logo from "@/assets/logo.png";
 import { NavLink, useLocation } from "react-router-dom";
 import { useSignOut } from "@/hooks/auth";
+import { IconBaseProps } from "react-icons";
 
 type NavLink = {
   id: number | string;
   labelText: string;
-  labelIcon: ReactNode;
+  labelIcon: IconBaseProps;
   url: string;
 };
 

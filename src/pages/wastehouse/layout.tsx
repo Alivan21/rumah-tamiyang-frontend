@@ -3,8 +3,18 @@ import { Toaster } from "@/components/ui/toaster";
 import { BiHome } from "react-icons/bi";
 import { GiNuclearWaste } from "react-icons/gi";
 import { Outlet } from "react-router-dom";
+import { MdProductionQuantityLimits } from "react-icons/md"
+import { IconBaseProps } from "react-icons";
 
-const navs = [
+
+type NavsType = {
+    id: number;
+    labelText: string;
+    labelIcon: IconBaseProps;
+    url: string;
+};
+
+const navs: NavsType[] = [
     {
         id: 1,
         labelText: "Home",
@@ -15,7 +25,14 @@ const navs = [
         labelText: "Limbah Jelantah",
         labelIcon: <GiNuclearWaste />,
         url: "/wastehouse/waste-oil"
-    }];
+    },
+    {
+        id: 3,
+        labelText: "Produksi",
+        labelIcon: <MdProductionQuantityLimits />,
+        url: "/wastehouse/production"
+    }
+];
 
 function WasteHouseLayout() {
     return (
