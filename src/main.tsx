@@ -12,13 +12,13 @@ const root = document.getElementById("root") as HTMLElement;
 
 createRoot(root).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <AuthProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <Toaster />
         <AppRoutesProvider />
-      </AuthProvider>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </AuthProvider>
   </StrictMode>
 );
 

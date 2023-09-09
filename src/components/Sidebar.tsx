@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 import { Button } from "./ui/button";
 import Logo from "@/assets/logo.png";
 import { NavLink, useLocation } from "react-router-dom";
+import { useSignOut } from "@/hooks/auth";
 
 type NavLink = {
   id: number | string;
@@ -17,6 +18,8 @@ type SidebarProps = {
 function Sidebar({ navs }: SidebarProps) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { mutateAsync: SignOutMutation } = useSignOut();
+  const [submitting, setSubmitting] = useState(false);
 
   const handleOpenSidebar = () => {
     setOpen(!open);
@@ -29,6 +32,15 @@ function Sidebar({ navs }: SidebarProps) {
     }
   };
   const title = getTitle();
+  async function handleSignout() {
+    setSubmitting(true);
+    try {
+      await SignOutMutation();
+      setSubmitting(false);
+    } catch (error) {
+      //
+    }
+  }
   return (
     <>
       <header className="flex items-center justify-between p-5 md:ml-2 lg:ml-64">
@@ -39,8 +51,9 @@ function Sidebar({ navs }: SidebarProps) {
       </header>
       <hr className="my-1" />
       <aside
-        className={`fixed bottom-0 top-0 z-10 w-64 overflow-y-auto bg-gray-900 p-2 text-center duration-300 ease-in-out lg:left-0 ${open ? "-translate-x-full lg:translate-x-0" : "translate-x-0"
-          }`}
+        className={`fixed bottom-0 top-0 z-10 w-64 overflow-y-auto bg-gray-900 p-2 text-center duration-300 ease-in-out lg:left-0 ${
+          open ? "-translate-x-full lg:translate-x-0" : "translate-x-0"
+        }`}
       >
         <div className="text-xl text-gray-100">
           <div className="flex items-center justify-between p-3">
@@ -65,16 +78,18 @@ function Sidebar({ navs }: SidebarProps) {
                   to={url}
                   className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600"
                 >
-                  { labelIcon }
-                  <span className="ml-4 text-[15px] font-bold text-gray-200">{ labelText }</span>
+                  {labelIcon}
+                  <span className="ml-4 text-[15px] font-bold text-gray-200">{labelText}</span>
                 </NavLink>
               </li>
-            )
+            );
           })}
           <div className="h-[1px] bg-gray-600"></div>
           <li className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600">
-            <i className="fa-solid fa-right-from-bracket"></i>
-            <span className="ml-4 text-[15px] font-bold text-gray-200">Logout</span>
+            <button onClick={handleSignout} disabled={submitting}>
+              <i className="fa-solid fa-right-from-bracket"></i>
+              <span className="ml-4 text-[15px] font-bold text-gray-200">Logout</span>
+            </button>
           </li>
         </ul>
       </aside>
