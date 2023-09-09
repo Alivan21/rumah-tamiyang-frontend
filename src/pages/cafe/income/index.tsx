@@ -3,10 +3,15 @@ import { BiSolidEdit, BiSolidPlusCircle } from "react-icons/bi";
 import { Button } from "@/components/ui/button";
 import DeleteModal from "@/components/modals/DeleteModal";
 import { cafeIncome, useDeleteCafeIncome, useGetCafeIncomes } from "@/hooks/cafe";
+import { useEffect } from "react";
 
 function Income() {
   const { data } = useGetCafeIncomes();
   const { mutateAsync: deleteIncome } = useDeleteCafeIncome();
+
+  useEffect(() => {
+    console.log(data);
+  }, [])
 
   return (
     <>

@@ -13,6 +13,10 @@ import WorkshopEditIncome from "@/pages/workshop/income/edit";
 import { PrivateRoutesGuard } from "./PrivateRoutesGuard";
 import WasteHouseLayout from "@/pages/wastehouse/layout";
 import EditCafeIncome from "@/pages/cafe/income/edit";
+import AddWasteOil from "@/pages/wastehouse/waste-oil/add";
+import WasteOil from "@/pages/wastehouse/waste-oil";
+import WasteHouse from "@/pages/wastehouse/dashboard";
+import EditWasteOil from "@/pages/wastehouse/waste-oil/edit";
 
 export function AppRoutes() {
   return (
@@ -35,7 +39,10 @@ export function AppRoutes() {
           <Route path="income/edit/:id" element={<WorkshopEditIncome />} />
         </Route>
         <Route element={<WasteHouseLayout />} path="wastehouse">
-          {/* route for wastehouse */}
+          <Route index element={<WasteHouse />} />
+          <Route path="waste-oil" element={<WasteOil />} />
+          <Route path="/wastehouse/waste-oil/add" element={<AddWasteOil />} />
+          <Route path="/wastehouse/waste-oil/edit/:id" element={<EditWasteOil />} />
         </Route>
       </Route>
     </Routes>
