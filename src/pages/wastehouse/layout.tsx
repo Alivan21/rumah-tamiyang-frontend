@@ -5,6 +5,7 @@ import { GiNuclearWaste } from "react-icons/gi";
 import { Outlet } from "react-router-dom";
 import { MdProductionQuantityLimits } from "react-icons/md"
 import { IconBaseProps } from "react-icons";
+import { RiWirelessChargingFill } from "react-icons/ri";
 
 
 type NavsType = {
@@ -37,6 +38,12 @@ const navs: NavsType[] = [
         labelText: "Pendapatan",
         labelIcon: <BiDollar />,
         url: "/wastehouse/income"
+    },
+    {
+        id: 5,
+        labelText: "Charging",
+        labelIcon: <RiWirelessChargingFill />,
+        url: "/wastehouse/charging"
     }
 ];
 
