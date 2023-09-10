@@ -7,7 +7,7 @@ function WasteHouseCharging() {
         <>
             <div className="flex items-center justify-between">
                 <h2 className="p-2 text-lg font-semibold">Daftar Frekuensi Charging LCA Energy Box</h2>
-                <Link to="/wastehouse/income/add">
+                <Link to="/wastehouse/charging/add">
                     <Button className="hidden rounded-lg bg-primary px-4 py-2 text-white lg:block">
                         + Tambah Data
                     </Button>
