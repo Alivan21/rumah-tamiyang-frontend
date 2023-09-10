@@ -38,6 +38,13 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route index element={<Login />} />
+      <Route element={<WorkshopLayout />} path="workshop">
+        <Route index element={<WorkshopDashboard />} />
+        <Route path="income" element={<WorkshopIncome />} />
+        <Route path="income/add" element={<AddIncomeWorkshop />} />
+        <Route path="income/:id" element={<WorkshopIncomeDetail />} />
+        <Route path="income/edit/:id" element={<WorkshopEditIncome />} />
+      </Route>
       <Route element={<PrivateRoutesGuard />}>
         <Route element={<CafeLayout />} path="cafe">
           <Route index element={<Dashboard />} />
@@ -46,13 +53,6 @@ export function AppRoutes() {
             <Route path="add" element={<AddIncome />} />
             <Route path="edit/:id" element={<EditCafeIncome />} />
           </Route>
-        </Route>
-        <Route element={<WorkshopLayout />} path="workshop">
-          <Route index element={<WorkshopDashboard />} />
-          <Route path="income" element={<WorkshopIncome />} />
-          <Route path="income/add" element={<AddIncomeWorkshop />} />
-          <Route path="income/:id" element={<WorkshopIncomeDetail />} />
-          <Route path="income/edit/:id" element={<WorkshopEditIncome />} />
         </Route>
         <Route element={<WasteHouseLayout />} path="wastehouse">
           <Route index element={<WasteHouse />} />

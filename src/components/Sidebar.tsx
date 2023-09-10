@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import Logo from "@/assets/logo.png";
 import { NavLink, useLocation } from "react-router-dom";
@@ -8,7 +8,7 @@ import { IconBaseProps } from "react-icons";
 type NavLink = {
   id: number | string;
   labelText: string;
-  labelIcon: IconBaseProps;
+  labelIcon: React.ReactElement<IconBaseProps>;
   url: string;
 };
 
@@ -17,7 +17,7 @@ type SidebarProps = {
 };
 
 function Sidebar({ navs }: SidebarProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const location = useLocation();
   const { mutateAsync: SignOutMutation } = useSignOut();
   const [submitting, setSubmitting] = useState(false);

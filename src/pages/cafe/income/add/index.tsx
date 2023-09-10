@@ -10,7 +10,7 @@ function AddIncome() {
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState<CafeIncomeRequest>({
     day: 0,
-    month: "jan",
+    month: "01",
     year: 0,
     expense: 0,
     revenue: 0,
