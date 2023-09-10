@@ -28,6 +28,11 @@ import WasteHouseIncomeEdit from "@/pages/wastehouse/income/edit";
 import WasteHouseCharging from "@/pages/wastehouse/charging";
 import WasteHouseAddCharging from "@/pages/wastehouse/charging/add";
 import WasteHouseChargingEdit from "@/pages/wastehouse/charging/edit";
+import AdminLayout from "@/pages/admin/layout";
+import AdminDashboard from "@/pages/admin/dashboard";
+import AdminUser from "@/pages/admin/user";
+import AddUser from "@/pages/admin/user/add";
+import UserEdit from "@/pages/admin/user/edit";
 
 export function AppRoutes() {
   return (
@@ -68,6 +73,12 @@ export function AppRoutes() {
           <Route path="/wastehouse/charging" element={<WasteHouseCharging />} />
           <Route path="/wastehouse/charging/add" element={<WasteHouseAddCharging />} />
           <Route path="/wastehouse/charging/edit/:id" element={<WasteHouseChargingEdit />} />
+        </Route>
+        <Route path="admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="user" element={<AdminUser />} />
+          <Route path="user/add" element={<AddUser />} />
+          <Route path="user/edit/:id" element={<UserEdit />} />
         </Route>
       </Route>
     </Routes>
