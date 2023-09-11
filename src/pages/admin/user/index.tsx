@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { useGetUsersListQuery } from "@/hooks/admin/user";
 import { BiSolidEdit, BiSolidPlusCircle, BiSolidTrash } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 function AdminUser() {
+    const { data } = useGetUsersListQuery();
     return (
         <>
             <div className="flex items-center justify-between">
@@ -38,13 +40,13 @@ function AdminUser() {
                         </tr>
                     </thead>
                     <tbody>
-                        {[1, 2, 3, 4, 5].map(num => (
-                            <tr key={num} className="border-b bg-white">
-                                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{num}</td>
-                                <td className="px-6 py-4">Fauzan</td>
-                                <td className="px-6 py-4">fauzan</td>
-                                <td className="px-6 py-4">fauzan@mail.com</td>
-                                <td className="px-6 py-4">Cafe</td>
+                        {data?.data.data.map((data, index: number) => (
+                            <tr key={data.id} className="border-b bg-white">
+                                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{index+1}</td>
+                                <td className="px-6 py-4">{ data.name }</td>
+                                <td className="px-6 py-4">{ data.identifier }</td>
+                                <td className="px-6 py-4">{ data.email }</td>
+                                <td className="px-6 py-4">{ data.role }</td>
                                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                                     <Link
                                         to={`/admin/user/edit/${1}`}
