@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function EditWasteOil() {
+    const { id } = useParams();
+
     return (
         <>
             <div className="mb-3 flex items-center gap-3">

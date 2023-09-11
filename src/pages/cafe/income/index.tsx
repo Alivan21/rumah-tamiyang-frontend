@@ -11,7 +11,7 @@ function Income() {
 
   useEffect(() => {
     console.log(data);
-  }, [])
+  }, [data])
 
   return (
     <>

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import DynamicInput, { InputItem } from "./components/DyanamicInput";
+import { useQuery } from "@tanstack/react-query";
 
 function AddIncomeWorkshop() {
   const [otherService, setOtherService] = useState<InputItem[]>([
@@ -128,7 +129,7 @@ function AddIncomeWorkshop() {
         {/* pendapatan sparepart */}
         <div className="flex flex-col gap-2 rounded-xl bg-white p-4">
           <p className="mb-2 text-lg font-semibold">Pendapatan Sparepart</p>
-          <p className="mb-2">Jumlah pendapatan spaepart</p>
+          <p className="mb-2">Jumlah pendapatan sparepart</p>
           <div className="flex items-center gap-2">
             <p className="text-base">Rp</p>
             <input type="number" id="penjualan" className="w-full rounded-lg border border-gray-300 p-3" />

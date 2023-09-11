@@ -1,8 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { BiPlus } from "react-icons/bi"
+import { useState } from "react";
+import DynamicInput from "@/pages/workshop/income/add/components/DyanamicInput";
 
 function WasteHouseAddProduction() {
+    const [otherProduction, setOtherProduction] = useState([
+        {
+            amount: 1,
+            description: ""
+        }
+    ]);
+    const [day, setDay] = useState("");
+    const [month, setMonth] = useState("01");
+    const [year, setYear] = useState("");
+
+    // production state
+    const [detergent, setDetergent] = useState(0);
+    const [aromateraphy, setAromateraphy] = useState(0);
+    const [pelitaLamp, setPelitaLamp] = useState(0);
     return (
         <>
             <div className="mb-3 flex items-center gap-3">
@@ -25,6 +40,8 @@ function WasteHouseAddProduction() {
                                 type="number"
                                 id="tanggal"
                                 name="day"
+                                value={day}
+                                onChange={e => setDay(e.target.value)}
                             />
                         </div>
                         <div className="flex w-1/2 flex-col gap-2">
@@ -35,6 +52,8 @@ function WasteHouseAddProduction() {
                                 className="h-full rounded-lg border border-gray-200 p-3 md:p-4"
                                 name="month"
                                 id="month"
+                                value={month}
+                                onChange={e => setMonth(e.target.value)}
                             >
                                 <option value="01">Januari</option>
                                 <option value="02">Februari</option>
@@ -59,6 +78,8 @@ function WasteHouseAddProduction() {
                                 type="number"
                                 id="year"
                                 name="year"
+                                value={year}
+                                onChange={e => setYear(e.target.value)}
                             />
                         </div>
                     </div>
@@ -71,6 +92,8 @@ function WasteHouseAddProduction() {
                             type="number"
                             id="detergent"
                             name="detergent"
+                            value={detergent}
+                            onChange={e => setDetergent(Number(e.target.value))}
                         />
                         <p className="text-base">Sabun Cuci</p>
                     </div>
@@ -80,6 +103,8 @@ function WasteHouseAddProduction() {
                             type="number"
                             id="aromateraphy"
                             name="aromateraphy"
+                            value={aromateraphy}
+                            onChange={e => setAromateraphy(Number(e.target.value))}
                         />
                         <p className="text-base">Lilin Aromaterapi</p>
                     </div>
@@ -87,22 +112,18 @@ function WasteHouseAddProduction() {
                         <input
                             className="w-1/3 rounded-lg border border-gray-300 p-3"
                             type="number"
-                            id="aromateraphy"
-                            name="aromateraphy"
+                            id="pelitalamp"
+                            name="pelitalamp"
+                            value={pelitaLamp}
+                            onChange={e => setPelitaLamp(Number(e.target.value))}
                         />
                         <p className="text-base">Lampu Pelita</p>
                     </div>
                     <div className="items-center">
                         <p className="text-base mb-2">Lain-lain</p>
-                        <div className="bg-white w-fit p-4 border border-gray-300 rounded-lg">
-                            <BiPlus color={"gray"} />
-                        </div>
+                        <DynamicInput initialInputList={otherProduction} onSetInputList={setOtherProduction} />
                     </div>
                 </div>
-                <Button
-                    className="fixed bottom-6 left-1/2 mt-8 w-5/6 -translate-x-1/2 rounded-full bg-primary p-4 text-white lg:relative lg:w-full lg:rounded-xl lg:py-3"
-                >
-                </Button>
             </form>
         </>
     );

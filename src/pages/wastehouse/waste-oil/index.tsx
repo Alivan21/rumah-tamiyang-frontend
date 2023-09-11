@@ -1,8 +1,40 @@
+import DeleteModal from "@/components/modals/DeleteModal";
 import { Button } from "@/components/ui/button";
-import { BiSolidEdit, BiSolidPlusCircle, BiSolidTrash } from "react-icons/bi";
+import { useToast } from "@/components/ui/use-toast";
+import { useDeleteWasteOilMutation, useGetWasteOilQuery } from "@/hooks/wastehouse/waste-oil";
+import { useState } from "react";
+import { BiSolidEdit, BiSolidPlusCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
+type wasteOilType = {
+    id: number;
+    date: Date;
+    amount: number;
+    origin: string;
+};
+
 function WasteOil() {
+    const { toast } = useToast();
+
+    const [idDeleted, setIdDeleted] = useState(-1);
+
+    const { data, refetch } = useGetWasteOilQuery();
+    const { mutate: onDelete } = useDeleteWasteOilMutation({
+        onSuccess: () => {
+            toast({
+                title: "Berhasil menghapus data",
+                variant: "success"
+            });
+            refetch();
+        },
+        onError: () => {
+            toast({
+                title: `Gagal menghapus data`,
+                variant: "destructive"
+            })
+        }
+    }, idDeleted);
+
     return (
         <>
             <div className="flex items-center justify-between">
@@ -35,12 +67,12 @@ function WasteOil() {
                         </tr>
                     </thead>
                     <tbody>
-                        {[1, 2, 3, 4, 5].map((num) => {
-                            return (<tr key={num} className="border-b bg-white">
-                                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-center">{ num }</td>
-                                <td className="px-6 py-4 text-center">12/12/2023</td>
-                                <td className="px-6 py-4 text-center">12</td>
-                                <td className="px-6 py-4 text-center">Koskosan</td>
+                        {data?.map((wasteoil: wasteOilType, index: number) => {
+                            return (<tr key={wasteoil.id} className="border-b bg-white">
+                                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-center">{index + 1}</td>
+                                <td className="px-6 py-4 text-center">{String(new Date(wasteoil.date).toLocaleDateString())}</td>
+                                <td className="px-6 py-4 text-center">{wasteoil.amount}</td>
+                                <td className="px-6 py-4 text-center">{wasteoil.origin}</td>
                                 <td className="m-auto mt-2 flex w-fit items-center justify-center gap-3">
                                     <Link
                                         to={`/wastehouse/waste-oil/edit/${1}`}
@@ -48,12 +80,10 @@ function WasteOil() {
                                     >
                                         <BiSolidEdit color="white" size={20} />
                                     </Link>
-                                    <Link
-                                        to={``}
-                                        className="m-auto w-fit cursor-pointer rounded-lg bg-red-500 p-1"
-                                    >
-                                        <BiSolidTrash color="white" size={20} />
-                                    </Link>
+                                    <DeleteModal key={wasteoil.id} deleteHandler={() => {
+                                        setIdDeleted(wasteoil.id);
+                                        onDelete();
+                                    }} />
                                 </td>
                             </tr>
                             )
