@@ -1,36 +1,40 @@
 import { Button } from "@/components/ui/button";
-import { httpClient } from "@/utils/http";
-import { useMutation } from "@tanstack/react-query";
+import { useToast } from "@/components/ui/use-toast";
+import { usePostUserMutation } from "@/hooks/admin/user";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function AddUser() {
+    const { toast } = useToast();
+    const navigate = useNavigate();
+
     const [name, setName] = useState<string>("");
     const [identifier, setIdentifier] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [roleId, setRoleId] = useState<string>("1");
 
-    const navigate = useNavigate();
-    const { mutate } = useMutation({
-        mutationKey: ["create-user-mutation"],
-        mutationFn: async () => {
-            event?.preventDefault();
-            const res = await httpClient.post("/admin", {
-                name: name,
-                identifier: identifier,
-                email: email,
-                role_id: roleId,
-                password: password
-            });
-            return res;
-        },
+    const { mutate } = usePostUserMutation({
         onSuccess: () => {
+            toast({
+                title: "Data Berhasil ditambah",
+                variant: "success"
+            });
             navigate("/admin/user");
         },
-        onError: (e) => {
-            console.log("ERROR" +  e);
-        }
+        onError: () => {
+            toast({
+                title: "Data gagal dihapus",
+                variant: "destructive"
+            });
+            navigate("/admin/user");
+        },
+    }, {
+        name: name,
+        identifier: identifier,
+        email: email,
+        role_id: roleId,
+        password: password
     })
     return (
         <>

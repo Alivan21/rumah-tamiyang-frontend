@@ -1,10 +1,31 @@
+import DeleteModal from "@/components/modals/DeleteModal";
 import { Button } from "@/components/ui/button";
-import { useGetUsersListQuery } from "@/hooks/admin/user";
+import { useToast } from "@/components/ui/use-toast";
+import { useDeleteUserMutation, useGetUsersListQuery } from "@/hooks/admin/user";
+import { useState } from "react";
 import { BiSolidEdit, BiSolidPlusCircle, BiSolidTrash } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 function AdminUser() {
-    const { data } = useGetUsersListQuery();
+    const { toast } = useToast();
+
+    const { data, refetch } = useGetUsersListQuery();
+    const [idDelete, setIdDelete] = useState(-1);
+    const { mutate: deleteHandler } = useDeleteUserMutation({
+        onSuccess: () => {
+            toast({
+                title: "Berhasil menghapus data",
+                variant: "success"
+            });
+            refetch();
+        },
+        onError: () => {
+            toast({
+                title: "Gagal menghapus data",
+                variant: "destructive"
+            });
+        }
+    }, idDelete);
     return (
         <>
             <div className="flex items-center justify-between">
@@ -42,11 +63,11 @@ function AdminUser() {
                     <tbody>
                         {data?.data.data.map((data, index: number) => (
                             <tr key={data.id} className="border-b bg-white">
-                                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{index+1}</td>
-                                <td className="px-6 py-4">{ data.name }</td>
-                                <td className="px-6 py-4">{ data.identifier }</td>
-                                <td className="px-6 py-4">{ data.email }</td>
-                                <td className="px-6 py-4">{ data.role }</td>
+                                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{index + 1}</td>
+                                <td className="px-6 py-4">{data.name}</td>
+                                <td className="px-6 py-4">{data.identifier}</td>
+                                <td className="px-6 py-4">{data.email}</td>
+                                <td className="px-6 py-4">{data.role}</td>
                                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                                     <Link
                                         to={`/admin/user/edit/${1}`}
@@ -54,11 +75,10 @@ function AdminUser() {
                                     >
                                         <BiSolidEdit color="white" size={20} />
                                     </Link>
-                                    <Button
-                                        className="m-auto h-fit w-fit cursor-pointer rounded-lg bg-red-500 p-1"
-                                    >
-                                        <BiSolidTrash color="white" size={20} />
-                                    </Button>
+                                    <DeleteModal deleteHandler={() => {
+                                        setIdDelete(data.id);
+                                        deleteHandler();
+                                    }} />
                                 </td>
                             </tr>
                         ))}
