@@ -1,7 +1,45 @@
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom"
+import { useToast } from "@/components/ui/use-toast";
+import { httpClient } from "@/utils/http";
+import { useMutation } from "@tanstack/react-query"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 
 function WasteHouseAddCharging() {
+    const { toast } = useToast();
+    const navigate = useNavigate();
+
+    const [day, setDay] = useState<string | undefined>();
+    const [month, setMonth] = useState<string | undefined>("01");
+    const [year, setYear] = useState<string | undefined>();
+    const [amount, setAmount] = useState<string | undefined>();
+
+    const { mutate: addCharging } = useMutation({
+        mutationKey: ["wastehouse-charging-mutation"],
+        mutationFn: async () => {
+            event?.preventDefault();
+            const res = await httpClient.post("/waste-house/energy-box", {
+                date: new Date(`${year}-${month}-${day}`),
+                amount: amount,
+                description: ""
+            });
+            return res;
+        },
+        onSuccess: () => {
+            toast({
+                title: "Data berhasil ditambahkan",
+                variant: "success"
+            });
+            navigate("/wastehouse/charging");
+        },
+        onError: () => {
+            toast({
+                title: "Data gagal ditambahkan",
+                variant: "destructive"
+            });
+            navigate("/wastehouse/charging");
+        }
+    })
     return (
         <>
             <div className="mb-3 flex items-center gap-3">
@@ -12,7 +50,7 @@ function WasteHouseAddCharging() {
                 </Link>
                 <h1 className="text-xl font-semibold">Tambah Frekuensi Charging LCA Energy Box</h1>
             </div>
-            <form className="flex flex-col gap-8">
+            <form className="flex flex-col gap-8" onSubmit={addCharging}>
                 <div>
                     <div className="flex justify-between gap-2 lg:gap-4">
                         <div className="flex w-1/4 flex-col gap-2">
@@ -24,6 +62,8 @@ function WasteHouseAddCharging() {
                                 type="number"
                                 id="tanggal"
                                 name="day"
+                                value={day}
+                                onChange={e => setDay(e.target.value)}
                             />
                         </div>
                         <div className="flex w-1/2 flex-col gap-2">
@@ -34,6 +74,8 @@ function WasteHouseAddCharging() {
                                 className="h-full rounded-lg border border-gray-200 p-3 md:p-4"
                                 name="month"
                                 id="month"
+                                value={month}
+                                onChange={e => setMonth(e.target.value)}
                             >
                                 <option value="01">Januari</option>
                                 <option value="02">Februari</option>
@@ -58,6 +100,8 @@ function WasteHouseAddCharging() {
                                 type="number"
                                 id="year"
                                 name="year"
+                                value={year}
+                                onChange={e => setYear(e.target.value)}
                             />
                         </div>
                     </div>
@@ -71,6 +115,8 @@ function WasteHouseAddCharging() {
                                 type="number"
                                 id="charging"
                                 name="charging"
+                                value={amount}
+                                onChange={e => setAmount(e.target.value)}
                             />
                             <p>Box</p>
                         </div>

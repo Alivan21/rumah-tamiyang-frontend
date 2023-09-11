@@ -1,8 +1,37 @@
+import DeleteModal from "@/components/modals/DeleteModal"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
+import { useDeleteChargingMutation, useGetChargingQuery } from "@/hooks/wastehouse/charging"
+import { useEffect, useState } from "react"
 import { BiSolidEdit, BiSolidPlusCircle, BiSolidTrash } from "react-icons/bi"
 import { Link } from "react-router-dom"
 
 function WasteHouseCharging() {
+    const { toast } = useToast();
+
+    const [idDelete, setIdDelete] = useState<number | undefined>(-1);
+
+    const { data, refetch } = useGetChargingQuery();
+    const { mutate: deleteCharging } = useDeleteChargingMutation({
+        onSuccess: () => {
+            toast({
+                title: "Data berhasil dihapus",
+                variant: "success"
+            });
+            refetch();
+        },
+        onError: () => {
+            toast({
+                title: "Data gagal dihapus",
+                variant: "destructive"
+            });
+        },
+    }, idDelete);
+
+    useEffect(() => {
+        refetch();
+    }, [data, refetch]);
+
     return (
         <>
             <div className="flex items-center justify-between">
@@ -32,11 +61,11 @@ function WasteHouseCharging() {
                         </tr>
                     </thead>
                     <tbody>
-                        {[1, 2, 3].map(num => (
-                            <tr key={num} className="border-b bg-white">
-                                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-center">1</td>
-                                <td className="px-6 py-4 text-center">12/12/1212</td>
-                                <td className="px-6 py-4 text-center">10</td>
+                        {data?.data.map((data, index: number) => (
+                            <tr key={data.id} className="border-b bg-white">
+                                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-center">{index + 1}</td>
+                                <td className="px-6 py-4 text-center">{new Date(data.date).toLocaleDateString()}</td>
+                                <td className="px-6 py-4 text-center">{data.amount}</td>
                                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                                     <Link
                                         to={`/wastehouse/charging/edit/${1}`}
@@ -44,11 +73,10 @@ function WasteHouseCharging() {
                                     >
                                         <BiSolidEdit color="white" size={20} />
                                     </Link>
-                                    <Button
-                                        className="m-auto w-fit h-fit cursor-pointer rounded-lg bg-red-500 p-1"
-                                    >
-                                        <BiSolidTrash color="white" size={20} />
-                                    </Button>
+                                    <DeleteModal deleteHandler={() => {
+                                        setIdDelete(data.id);
+                                        deleteCharging();
+                                    }} />
                                 </td>
                             </tr>
                         )

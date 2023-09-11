@@ -1,8 +1,22 @@
 import { Button } from "@/components/ui/button";
+import { httpClient } from "@/utils/http";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 function EditWasteOil() {
     const { id } = useParams();
+    const { data } = useQuery({
+        queryKey: [`waste-oil-${id}`],
+        queryFn: async () => {
+            const res = await httpClient.get(`/waste-house/oil-waste/${id}`);
+            return res;
+        }
+    });
+
+    useEffect(() => {
+        console.log(new Date(data?.data.data.date).getMonth());
+    }, [])
 
     return (
         <>
@@ -26,6 +40,7 @@ function EditWasteOil() {
                                 type="number"
                                 id="tanggal"
                                 name="day"
+                                defaultValue={new Date(data?.data.data.date).getDate()}
                             />
                         </div>
                         <div className="flex w-1/2 flex-col gap-2">
@@ -36,6 +51,7 @@ function EditWasteOil() {
                                 className="h-full rounded-lg border border-gray-200 p-3 md:p-4"
                                 name="month"
                                 id="month"
+                                defaultValue={new Date(data?.data.data.date).getMonth()}
                             >
                                 <option value="01">Januari</option>
                                 <option value="02">Februari</option>
@@ -60,6 +76,7 @@ function EditWasteOil() {
                                 type="number"
                                 id="year"
                                 name="year"
+                                defaultValue={new Date(data?.data.data.date).getFullYear()}
                             />
                         </div>
                     </div>
@@ -69,6 +86,7 @@ function EditWasteOil() {
                     <input
                         className="w-full rounded-lg border border-gray-300 p-3"
                         type="number"
+                        defaultValue={data?.data.data.amount}
                         id="amount"
                         name="amount"
                     />
@@ -78,6 +96,7 @@ function EditWasteOil() {
                     <input
                         className="w-full rounded-lg border border-gray-300 p-3"
                         type="text"
+                        defaultValue={data?.data.data.origin}
                         id="origin"
                         name="origin"
                     />

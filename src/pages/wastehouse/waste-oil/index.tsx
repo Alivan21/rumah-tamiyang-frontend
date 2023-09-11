@@ -75,7 +75,7 @@ function WasteOil() {
                                 <td className="px-6 py-4 text-center">{wasteoil.origin}</td>
                                 <td className="m-auto mt-2 flex w-fit items-center justify-center gap-3">
                                     <Link
-                                        to={`/wastehouse/waste-oil/edit/${1}`}
+                                        to={`/wastehouse/waste-oil/edit/${wasteoil.id}`}
                                         className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1"
                                     >
                                         <BiSolidEdit color="white" size={20} />
