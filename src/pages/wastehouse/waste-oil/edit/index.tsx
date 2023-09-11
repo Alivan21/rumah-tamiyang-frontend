@@ -1,22 +1,58 @@
 import { Button } from "@/components/ui/button";
-import { httpClient } from "@/utils/http";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
+import { useGetWasteOilByIdQuery, useUpdateOilMutation } from "@/hooks/wastehouse/waste-oil";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function EditWasteOil() {
     const { id } = useParams();
-    const { data } = useQuery({
-        queryKey: [`waste-oil-${id}`],
-        queryFn: async () => {
-            const res = await httpClient.get(`/waste-house/oil-waste/${id}`);
-            return res;
+    const navigate = useNavigate();
+    const { toast } = useToast();
+
+    const [day, setDay] = useState("");
+    const [month, setMonth] = useState("");
+    const [year, setYear] = useState("");
+    const [amount, setAmount] = useState("");
+    const [origin, setOrigin] = useState("");
+
+    const { data, refetch } = useGetWasteOilByIdQuery(id);
+    const { mutate } = useUpdateOilMutation({
+        onSuccess: () => {
+            toast({
+                title: "Berhasil diupdate",
+                variant: "success"
+            });
+            navigate("/wastehouse/waste-oil");
+        },
+        onError: () => {
+            toast({
+                title: "Gagal diupdate",
+                variant: "destructive"
+            });
+            navigate("/wastehouse/waste-oil");
         }
-    });
+    }, id, {
+        date: `${year}-${month}-${day}`,
+        amount: amount,
+        origin: origin
+    })
 
     useEffect(() => {
-        console.log(new Date(data?.data.data.date).getMonth());
-    }, [])
+        refetch();
+        setDay(data?.data.date.split("-")[2]);
+        setMonth(data?.data.date.split("-")[1]);
+        setYear(data?.data.date.split("-")[0]);
+        setAmount(data?.data.amount);
+        setOrigin(data?.data.origin);
+
+        () => {
+            setDay("");
+            setMonth("");
+            setYear("");
+            setAmount("");
+            setOrigin("");
+        }
+    }, [data]);
 
     return (
         <>
@@ -28,7 +64,7 @@ function EditWasteOil() {
                 </Link>
                 <h1 className="text-xl font-semibold">Edit Data Minta Jelantah</h1>
             </div>
-            <form className="flex flex-col gap-8">
+            <form className="flex flex-col gap-8" onSubmit={mutate}>
                 <div>
                     <div className="flex justify-between gap-2 lg:gap-4">
                         <div className="flex w-1/4 flex-col gap-2">
@@ -40,7 +76,8 @@ function EditWasteOil() {
                                 type="number"
                                 id="tanggal"
                                 name="day"
-                                defaultValue={new Date(data?.data.data.date).getDate()}
+                                value={day}
+                                onChange={e => setDay(e.target.value)}
                             />
                         </div>
                         <div className="flex w-1/2 flex-col gap-2">
@@ -51,7 +88,9 @@ function EditWasteOil() {
                                 className="h-full rounded-lg border border-gray-200 p-3 md:p-4"
                                 name="month"
                                 id="month"
-                                defaultValue={new Date(data?.data.data.date).getMonth()}
+                                defaultValue={data?.data.date.split("-")[1]}
+                                value={month}
+                                onChange={e => setMonth(e.target.value)}
                             >
                                 <option value="01">Januari</option>
                                 <option value="02">Februari</option>
@@ -76,7 +115,9 @@ function EditWasteOil() {
                                 type="number"
                                 id="year"
                                 name="year"
-                                defaultValue={new Date(data?.data.data.date).getFullYear()}
+                                defaultValue={data?.data.date.split("-")[0]}
+                                value={year}
+                                onChange={e => setYear(e.target.value)}
                             />
                         </div>
                     </div>
@@ -86,9 +127,11 @@ function EditWasteOil() {
                     <input
                         className="w-full rounded-lg border border-gray-300 p-3"
                         type="number"
-                        defaultValue={data?.data.data.amount}
+                        defaultValue={data?.data.amount}
                         id="amount"
                         name="amount"
+                        value={amount}
+                        onChange={e => setAmount(e.target.value)}
                     />
                 </div>
                 <div>
@@ -96,9 +139,11 @@ function EditWasteOil() {
                     <input
                         className="w-full rounded-lg border border-gray-300 p-3"
                         type="text"
-                        defaultValue={data?.data.data.origin}
+                        defaultValue={data?.data.origin}
                         id="origin"
                         name="origin"
+                        value={origin}
+                        onChange={e => setOrigin(e.target.value)}
                     />
                 </div>
                 <Button

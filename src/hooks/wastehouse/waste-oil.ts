@@ -7,8 +7,8 @@ type mutationProps = {
 };
 
 type wasteoilBodyProps = {
-    date: Date;
-    amount: number;
+    date: Date | string;
+    amount: number | string;
     origin: string;
 };
 
@@ -50,12 +50,27 @@ export const useAddWasteOilMutation = ({ onSuccess, onError }: mutationProps, bo
     });
 };
 
-// export const useGetWasteOilQueryById = (id: undefined | number) => {
-//     return useQuery({
-//         queryKey: [`waste-oil ${id}`],
-//         queryFn: async () => {
-//             const { data } = await httpClient.get(`waste-house/oil-waste/${id}`);
-//             return data.data;
-//         }
-//     });
-// };
+export function useGetWasteOilByIdQuery(id: string | undefined) {
+    return useQuery({
+        queryKey: [`waste-oil-${id}`],
+        queryFn: async () => {
+            const res = await httpClient.get(`/waste-house/oil-waste/${id}`);
+            return res.data;
+        }
+    });
+};
+
+export function useUpdateOilMutation({onSuccess, onError}: mutationProps, id: string | undefined, body: wasteoilBodyProps) {
+    return useMutation({
+        mutationKey: [`waste-oil-update-${id}`],
+        mutationFn: async () => {
+            event?.preventDefault();
+            const res = await httpClient.put(`/waste-house/oil-waste/${id}`, {
+                ...body
+            });
+            return res.data;
+        },
+        onSuccess,
+        onError
+    })
+};

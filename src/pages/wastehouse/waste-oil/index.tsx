@@ -70,7 +70,7 @@ function WasteOil() {
                         {data?.map((wasteoil: wasteOilType, index: number) => {
                             return (<tr key={wasteoil.id} className="border-b bg-white">
                                 <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-center">{index + 1}</td>
-                                <td className="px-6 py-4 text-center">{String(new Date(wasteoil.date).toLocaleDateString())}</td>
+                                <td className="px-6 py-4 text-center">{String(wasteoil.date)}</td>
                                 <td className="px-6 py-4 text-center">{wasteoil.amount}</td>
                                 <td className="px-6 py-4 text-center">{wasteoil.origin}</td>
                                 <td className="m-auto mt-2 flex w-fit items-center justify-center gap-3">
