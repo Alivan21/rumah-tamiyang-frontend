@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import DynamicInput, { InputItem } from "./components/DyanamicInput";
-import { useQuery } from "@tanstack/react-query";
 
 function AddIncomeWorkshop() {
   const [otherService, setOtherService] = useState<InputItem[]>([
@@ -11,8 +10,13 @@ function AddIncomeWorkshop() {
       description: "",
     },
   ]);
-
   const [otherSparepart, setOtherSparepart] = useState<InputItem[]>([
+    {
+      amount: 0,
+      description: "",
+    },
+  ]);
+  const [otherExpense, setOtherExpense] = useState<InputItem[]>([
     {
       amount: 0,
       description: "",
@@ -22,9 +26,11 @@ function AddIncomeWorkshop() {
   const handleOtherService = (newInputList: InputItem[]) => {
     setOtherService([...newInputList]);
   };
-
   const handleOtherSparepart = (newInputList: InputItem[]) => {
     setOtherSparepart([...newInputList]);
+  };
+  const handleOtherExpense = (newInputList: InputItem[]) => {
+    setOtherExpense([...newInputList]);
   };
 
   const [day, setDay] = useState<string | undefined>();
@@ -149,6 +155,30 @@ function AddIncomeWorkshop() {
           </div>
           <p className="text-lg font-semibold">Lain-lain</p>
           <DynamicInput initialInputList={otherSparepart} onSetInputList={handleOtherSparepart} />
+        </div>
+        {/* pengeluaran */}
+        <div className="flex flex-col gap-2 rounded-xl bg-white p-4">
+          <p className="mb-2 text-lg font-semibold">Pengeluaran</p>
+          <p className="mb-2">Jumlah pengeluaran</p>
+          <div className="flex items-center gap-2">
+            <p className="text-base">Rp</p>
+            <input type="number" id="penjualan" className="w-full rounded-lg border border-gray-300 p-3" />
+          </div>
+          <p className="text-lg font-semibold">Keterangan</p>
+          <div className="flex items-center gap-2">
+            <input type="number" id="penjualan" className="w-1/3 rounded-lg border border-gray-300 p-3" />
+            <p className="w-full text-base">Listrik</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <input type="number" id="penjualan" className="w-1/3 rounded-lg border border-gray-300 p-3" />
+            <p className="w-full text-base">Air & Bensin</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <input type="number" id="penjualan" className="w-1/3 rounded-lg border border-gray-300 p-3" />
+            <p className="w-full text-base">Pembelian Peralatan</p>
+          </div>
+          <p className="text-lg font-semibold">Lain-lain</p>
+          <DynamicInput initialInputList={otherExpense} onSetInputList={handleOtherExpense} />
         </div>
         <Button
           className="fixed bottom-6 left-1/2 mt-8 w-5/6 -translate-x-1/2 rounded-full bg-primary p-4 text-white lg:relative lg:w-full lg:rounded-xl lg:py-3"

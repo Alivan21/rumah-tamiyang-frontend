@@ -7,6 +7,16 @@ import { queryClient } from "./lib/react-query";
 import "./styles/global.css";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./contexts/AuthProvider";
+import { registerSW } from "virtual:pwa-register";
+
+// add this to prompt for a refresh
+const updateSW = registerSW({
+  onNeedRefresh() {
+    if (confirm("Konten baru tersedia. Muat ulang halaman?")) {
+      updateSW(true);
+    }
+  },
+});
 
 const root = document.getElementById("root") as HTMLElement;
 

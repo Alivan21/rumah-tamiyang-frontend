@@ -78,10 +78,10 @@ export function useEditCafeIncome(props: CafeIncomeRequest, id?: string) {
   });
 }
 
-export function useDeleteCafeIncome() {
+export function useDeleteCafeIncome(id: string) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (id: number) => {
+    mutationFn: async () => {
       await httpClient.delete(`/cafe/revenue/${id}`);
     },
     onSuccess: () => {
