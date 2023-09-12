@@ -3,15 +3,10 @@ import { BiSolidEdit, BiSolidPlusCircle } from "react-icons/bi";
 import { Button } from "@/components/ui/button";
 import DeleteModal from "@/components/modals/DeleteModal";
 import { cafeIncome, useDeleteCafeIncome, useGetCafeIncomes } from "@/hooks/cafe";
-import { useEffect } from "react";
 
 function Income() {
   const { data } = useGetCafeIncomes();
   const { mutateAsync: deleteIncome } = useDeleteCafeIncome();
-
-  useEffect(() => {
-    console.log(data);
-  }, [data])
 
   return (
     <>
@@ -40,7 +35,7 @@ function Income() {
                 Pembelian
               </th>
               <th scope="col" className="px-6 py-3">
-                Keuntungan
+                Pendapatan
               </th>
               <th scope="col" className="px-6 py-3 text-center">
                 Action
@@ -50,16 +45,22 @@ function Income() {
           <tbody>
             {data?.map((income: cafeIncome, index: number) => (
               <tr key={income.id} className="border-b bg-white">
-                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{index + 1}</td>
-                <td className="px-6 py-4">{income.date}</td>
-                <td className="px-6 py-4">{income.revenue}</td>
-                <td className="px-6 py-4">{income.expense}</td>
-                <td className="px-6 py-4">{income.profit}%</td>
+                <td className="px-6 py-4 font-medium text-gray-900">{index + 1}</td>
+                <td className="whitespace-nowrap px-6 py-4">{income.date.split("T")[0]}</td>
+                <td className="whitespace-nowrap px-6 py-4">
+                  Rp. {income.sale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                </td>
+                <td className="whitespace-nowrap px-6 py-4">
+                  Rp. {income.purchase.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                </td>
+                <td className="whitespace-nowrap px-6 py-4">
+                  Rp. {income.income.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                </td>
                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                   <DeleteModal
                     key={income.id}
-                    deleteHandler={() => {
-                      deleteIncome(income.id);
+                    deleteHandler={async () => {
+                      await deleteIncome(income.id);
                     }}
                   />
                   <Link

@@ -12,8 +12,8 @@ function AddIncome() {
     day: 0,
     month: "01",
     year: 0,
-    expense: 0,
-    revenue: 0,
+    purchase: 0,
+    sale: 0,
   });
   const { mutateAsync: AddIncomeMutation } = useAddCafeIncome(form);
 
@@ -113,9 +113,9 @@ function AddIncome() {
             <input
               className="w-full rounded-lg border border-gray-300 p-3"
               type="number"
-              id="revenue"
-              name="revenue"
-              value={form.revenue}
+              id="sale"
+              name="sale"
+              value={form.sale}
               onChange={handleChange}
             />
           </div>
@@ -127,9 +127,9 @@ function AddIncome() {
             <input
               className="w-full rounded-lg border border-gray-300 p-3"
               type="number"
-              id="expense"
-              name="expense"
-              value={form.expense}
+              id="purchase"
+              name="purchase"
+              value={form.purchase}
               onChange={handleChange}
             />
           </div>

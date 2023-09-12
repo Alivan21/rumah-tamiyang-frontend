@@ -6,17 +6,17 @@ import toast from "react-hot-toast";
 export type cafeIncome = {
   id: number;
   date: string;
-  revenue: number;
-  expense: number;
-  profit: number;
+  sale: number;
+  purchase: number;
+  income: number;
 };
 
 export type CafeIncomeRequest = {
   day: number;
   month: string;
   year: number;
-  expense: number;
-  revenue: number;
+  purchase: number;
+  sale: number;
 };
 
 export function useGetCafeIncomes() {
@@ -47,8 +47,8 @@ export function useAddCafeIncome(props: CafeIncomeRequest) {
   const date = `${props.year}-${props.month}-${props.day}`;
 
   formData.set("date", date);
-  formData.set("revenue", props.revenue.toString());
-  formData.set("expense", props.expense.toString());
+  formData.set("sale", props.sale.toString());
+  formData.set("purchase", props.purchase.toString());
   return useMutation({
     mutationFn: async () => {
       await httpClient.post("/cafe/revenue", formData);
@@ -62,14 +62,19 @@ export function useAddCafeIncome(props: CafeIncomeRequest) {
 
 export function useEditCafeIncome(props: CafeIncomeRequest, id?: string) {
   const queryClient = useQueryClient();
-  const formData = new FormData();
   const date = `${props.year}-${props.month}-${props.day}`;
-  formData.set("date", date);
-  formData.set("revenue", props.revenue.toString());
-  formData.set("expense", props.expense.toString());
+  const data = JSON.stringify({
+    date: date,
+    sale: props.sale,
+    purchase: props.purchase,
+  });
   return useMutation({
     mutationFn: async () => {
-      await httpClient.put(`/cafe/revenue/${id}`, formData);
+      await httpClient.put(`/cafe/revenue/${id}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cafe-income"] });
@@ -78,10 +83,10 @@ export function useEditCafeIncome(props: CafeIncomeRequest, id?: string) {
   });
 }
 
-export function useDeleteCafeIncome(id: string) {
+export function useDeleteCafeIncome() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async (id: number) => {
       await httpClient.delete(`/cafe/revenue/${id}`);
     },
     onSuccess: () => {

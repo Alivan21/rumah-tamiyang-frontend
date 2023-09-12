@@ -1,21 +1,34 @@
 import { Button } from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner";
 import { CafeIncomeRequest, useEditCafeIncome, useGetCafeIncomesById } from "@/hooks/cafe";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 function EditCafeIncome() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [form, setForm] = useState<CafeIncomeRequest>({
-    day: 0,
-    month: "jan",
-    year: 0,
-    expense: 0,
-    revenue: 0,
-  });
-
   const { data } = useGetCafeIncomesById(id);
-  const date = data?.date.split("-");
+  const initialFormState: CafeIncomeRequest = {
+    day: 0,
+    month: "01",
+    year: 0,
+    purchase: 0,
+    sale: 0,
+  };
+  const [form, setForm] = useState(initialFormState);
+
+  useEffect(() => {
+    if (data) {
+      const date = data.date.toString().split("-");
+      setForm({
+        day: parseInt(date[2]),
+        month: date[1],
+        year: parseInt(date[0]),
+        purchase: data.purchase,
+        sale: data.sale,
+      });
+    }
+  }, [data]);
 
   const { mutateAsync: EditIncomeMutation } = useEditCafeIncome(form, id);
 
@@ -49,99 +62,100 @@ function EditCafeIncome() {
         </Link>
         <h1 className="text-xl font-semibold">Tambah Income</h1>
       </div>
-      <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
-        <div>
-          <div className="flex justify-between gap-2 lg:gap-4">
-            <div className="flex w-1/4 flex-col gap-2">
-              <label htmlFor="tanggal" className="block text-base text-gray-800">
-                Tanggal
-              </label>
+      {data ? (
+        <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+          <div>
+            <div className="flex justify-between gap-2 lg:gap-4">
+              <div className="flex w-1/4 flex-col gap-2">
+                <label htmlFor="tanggal" className="block text-base text-gray-800">
+                  Tanggal
+                </label>
+                <input
+                  className="block w-full rounded-lg border border-gray-200 p-3 md:p-4"
+                  type="number"
+                  id="tanggal"
+                  name="day"
+                  value={form.day}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex w-1/2 flex-col gap-2">
+                <label htmlFor="bulan" className="block text-center text-base text-gray-800">
+                  Bulan
+                </label>
+                <select
+                  className="h-full rounded-lg border border-gray-200 p-3 md:p-4"
+                  name="month"
+                  id="month"
+                  value={form.month}
+                  onChange={handleChangeSelect}
+                >
+                  <option value="01">Januari</option>
+                  <option value="02">Februari</option>
+                  <option value="03">Maret</option>
+                  <option value="04">April</option>
+                  <option value="05">Mei</option>
+                  <option value="06">Juni</option>
+                  <option value="07">Juli</option>
+                  <option value="08">Agustus</option>
+                  <option value="09">September</option>
+                  <option value="10">Oktober</option>
+                  <option value="11">November</option>
+                  <option value="12">Desember</option>
+                </select>
+              </div>
+              <div className="flex w-1/4 flex-col gap-2">
+                <label htmlFor="tahun" className="block text-base text-gray-800">
+                  Tahun
+                </label>
+                <input
+                  className="block rounded-lg border border-gray-200 p-3 md:p-4"
+                  type="number"
+                  id="year"
+                  name="year"
+                  value={form.year}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <p className="mb-2 text-base">Penjualan</p>
+            <div className="flex items-center gap-2">
+              <p className="text-base">Rp</p>
               <input
-                className="block w-full rounded-lg border border-gray-200 p-3 md:p-4"
+                className="w-full rounded-lg border border-gray-300 p-3"
                 type="number"
-                id="tanggal"
-                name="day"
-                defaultValue={date?.[0]}
-                value={form.day}
+                id="sale"
+                name="sale"
+                value={form.sale}
                 onChange={handleChange}
               />
             </div>
-            <div className="flex w-1/2 flex-col gap-2">
-              <label htmlFor="bulan" className="block text-center text-base text-gray-800">
-                Bulan
-              </label>
-              <select
-                className="h-full rounded-lg border border-gray-200 p-3 md:p-4"
-                name="month"
-                id="month"
-                defaultValue={date?.[1]}
-                value={form.month}
-                onChange={handleChangeSelect}
-              >
-                <option value="01">Januari</option>
-                <option value="02">Februari</option>
-                <option value="03">Maret</option>
-                <option value="04">April</option>
-                <option value="05">Mei</option>
-                <option value="06">Juni</option>
-                <option value="07">Juli</option>
-                <option value="08">Agustus</option>
-                <option value="09">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
-              </select>
-            </div>
-            <div className="flex w-1/4 flex-col gap-2">
-              <label htmlFor="tahun" className="block text-base text-gray-800">
-                Tahun
-              </label>
+          </div>
+          <div>
+            <p className="mb-2 text-base">Pembelian</p>
+            <div className="flex items-center gap-2">
+              <p className="text-base">Rp</p>
               <input
-                className="block rounded-lg border border-gray-200 p-3 md:p-4"
+                className="w-full rounded-lg border border-gray-300 p-3"
                 type="number"
-                id="year"
-                name="year"
-                defaultValue={date?.[2]}
-                value={form.year}
+                id="purchase"
+                name="purchase"
+                value={form.purchase}
                 onChange={handleChange}
               />
             </div>
           </div>
+          <Button className="fixed bottom-6 left-1/2 mt-8 w-5/6 -translate-x-1/2 rounded-full bg-primary p-4 text-white lg:relative lg:w-full lg:rounded-xl lg:py-3">
+            Update
+          </Button>
+        </form>
+      ) : (
+        <div className="flex items-center justify-center">
+          <Spinner />
         </div>
-        <div>
-          <p className="mb-2 text-base">Penjualan</p>
-          <div className="flex items-center gap-2">
-            <p className="text-base">Rp</p>
-            <input
-              className="w-full rounded-lg border border-gray-300 p-3"
-              type="number"
-              id="revenue"
-              name="revenue"
-              defaultValue={data?.revenue}
-              value={form.revenue}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <div>
-          <p className="mb-2 text-base">Pembelian</p>
-          <div className="flex items-center gap-2">
-            <p className="text-base">Rp</p>
-            <input
-              className="w-full rounded-lg border border-gray-300 p-3"
-              type="number"
-              id="expense"
-              name="expense"
-              defaultValue={data?.expense}
-              value={form.expense}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <Button className="fixed bottom-6 left-1/2 mt-8 w-5/6 -translate-x-1/2 rounded-full bg-primary p-4 text-white lg:relative lg:w-full lg:rounded-xl lg:py-3">
-          Update
-        </Button>
-      </form>
+      )}
     </>
   );
 }
