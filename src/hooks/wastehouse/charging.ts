@@ -11,6 +11,19 @@ type postBodyProps = {
     date: string;
 };
 
+export function useCreateChargingMutation(body: postBodyProps, {onSuccess, onError}: mutationProps) {
+    return useMutation({
+        mutationFn: async () => {
+            const res = await httpClient.post("/waste-house/energy-box", {
+                ...body
+            });
+            return res;
+        },
+        onSuccess,
+        onError
+    });
+};
+
 export function useGetChargingQuery() {
     return useQuery({
         queryKey: ["waste-house-charging"],

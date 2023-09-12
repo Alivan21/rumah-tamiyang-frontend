@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast";
+import { useCreateChargingMutation } from "@/hooks/wastehouse/charging";
 import { httpClient } from "@/utils/http";
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
@@ -9,22 +10,15 @@ function WasteHouseAddCharging() {
     const { toast } = useToast();
     const navigate = useNavigate();
 
-    const [day, setDay] = useState<string | undefined>();
-    const [month, setMonth] = useState<string | undefined>("01");
-    const [year, setYear] = useState<string | undefined>();
-    const [amount, setAmount] = useState<string | undefined>();
+    const [day, setDay] = useState<string>("1");
+    const [month, setMonth] = useState<string>("01");
+    const [year, setYear] = useState<string>("2023");
+    const [amount, setAmount] = useState<number>(0);
 
-    const { mutate: addCharging } = useMutation({
-        mutationKey: ["wastehouse-charging-mutation"],
-        mutationFn: async () => {
-            event?.preventDefault();
-            const res = await httpClient.post("/waste-house/energy-box", {
-                date: new Date(`${year}-${month}-${day}`),
-                amount: amount,
-                description: ""
-            });
-            return res;
-        },
+    const { mutate: onCreateCharging } = useCreateChargingMutation({
+        date: `${year}-${month}-${day}`,
+        amount: amount,
+    }, {
         onSuccess: () => {
             toast({
                 title: "Data berhasil ditambahkan",
@@ -39,7 +33,13 @@ function WasteHouseAddCharging() {
             });
             navigate("/wastehouse/charging");
         }
-    })
+    });
+
+    const createHandler = () => {
+        event?.preventDefault();
+        onCreateCharging();
+    };
+
     return (
         <>
             <div className="mb-3 flex items-center gap-3">
@@ -50,7 +50,7 @@ function WasteHouseAddCharging() {
                 </Link>
                 <h1 className="text-xl font-semibold">Tambah Frekuensi Charging LCA Energy Box</h1>
             </div>
-            <form className="flex flex-col gap-8" onSubmit={addCharging}>
+            <form className="flex flex-col gap-8" onSubmit={createHandler}>
                 <div>
                     <div className="flex justify-between gap-2 lg:gap-4">
                         <div className="flex w-1/4 flex-col gap-2">
