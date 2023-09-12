@@ -2,11 +2,13 @@ import { Button } from "@/components/ui/button";
 import Spinner from "@/components/ui/spinner";
 import { CafeIncomeRequest, useEditCafeIncome, useGetCafeIncomesById } from "@/hooks/cafe";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 function EditCafeIncome() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
   const { data } = useGetCafeIncomesById(id);
   const initialFormState: CafeIncomeRequest = {
     day: 0,
@@ -44,11 +46,14 @@ function EditCafeIncome() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitting(true);
     try {
       await EditIncomeMutation();
+      setSubmitting(false);
       return navigate("/cafe/income");
     } catch (error) {
-      //
+      setSubmitting(false);
+      return toast.error("Gagal mengubah data");
     }
   };
 
@@ -60,7 +65,7 @@ function EditCafeIncome() {
             <i className="fa-solid fa-arrow-left text-xl"></i>
           </Button>
         </Link>
-        <h1 className="text-xl font-semibold">Tambah Income</h1>
+        <h1 className="text-xl font-semibold">Ubah Income</h1>
       </div>
       {data ? (
         <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
@@ -80,7 +85,7 @@ function EditCafeIncome() {
                 />
               </div>
               <div className="flex w-1/2 flex-col gap-2">
-                <label htmlFor="bulan" className="block text-center text-base text-gray-800">
+                <label htmlFor="month" className="block text-center text-base text-gray-800">
                   Bulan
                 </label>
                 <select
@@ -105,7 +110,7 @@ function EditCafeIncome() {
                 </select>
               </div>
               <div className="flex w-1/4 flex-col gap-2">
-                <label htmlFor="tahun" className="block text-base text-gray-800">
+                <label htmlFor="year" className="block text-base text-gray-800">
                   Tahun
                 </label>
                 <input
@@ -148,7 +153,7 @@ function EditCafeIncome() {
             </div>
           </div>
           <Button className="fixed bottom-6 left-1/2 mt-8 w-5/6 -translate-x-1/2 rounded-full bg-primary p-4 text-white lg:relative lg:w-full lg:rounded-xl lg:py-3">
-            Update
+            {submitting ? <Spinner /> : "Ubah Data"}
           </Button>
         </form>
       ) : (

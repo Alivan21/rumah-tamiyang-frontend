@@ -4,6 +4,7 @@ import Logo from "@/assets/logo.png";
 import { NavLink, useLocation } from "react-router-dom";
 import { useSignOut } from "@/hooks/auth";
 import { IconBaseProps } from "react-icons";
+import toast from "react-hot-toast";
 
 type NavLink = {
   id: number | string;
@@ -33,10 +34,16 @@ function Sidebar({ navs }: SidebarProps) {
     }
   };
   const title = getTitle();
-  async function handleSignout() {
+
+  async function handleSignout(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
     setSubmitting(true);
     try {
-      await SignOutMutation();
+      toast.promise(SignOutMutation(), {
+        loading: "Loading...",
+        success: "Berhasil logout",
+        error: "Gagal logout",
+      });
       setSubmitting(false);
     } catch (error) {
       //
@@ -86,8 +93,12 @@ function Sidebar({ navs }: SidebarProps) {
             );
           })}
           <div className="h-[1px] bg-gray-600"></div>
-          <li className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600">
-            <button onClick={handleSignout} disabled={submitting}>
+          <li>
+            <button
+              onClick={handleSignout}
+              disabled={submitting}
+              className="flex w-full cursor-pointer items-center rounded-md p-2.5 px-4 text-white duration-300 hover:bg-blue-600"
+            >
               <i className="fa-solid fa-right-from-bracket"></i>
               <span className="ml-4 text-[15px] font-bold text-gray-200">Logout</span>
             </button>
