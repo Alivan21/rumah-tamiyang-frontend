@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateChargingMutation } from "@/hooks/wastehouse/charging";
-import { httpClient } from "@/utils/http";
-import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -116,7 +114,7 @@ function WasteHouseAddCharging() {
                                 id="charging"
                                 name="charging"
                                 value={amount}
-                                onChange={e => setAmount(e.target.value)}
+                                onChange={e => setAmount(Number(e.target.value))}
                             />
                             <p>Box</p>
                         </div>

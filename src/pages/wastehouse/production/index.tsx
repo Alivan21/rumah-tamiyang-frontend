@@ -1,8 +1,42 @@
+import DeleteModal from "@/components/modals/DeleteModal";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import { productionType, useDeleteProductionMutation, useGetAllProductionQuery } from "@/hooks/wastehouse/production";
+import { useEffect, useState } from "react";
 import { BiSolidEdit, BiSolidPlusCircle, BiSolidShow, BiSolidTrash } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 function WasteHouseProduction() {
+    const { toast } = useToast();
+
+    const [deletedId, setDeletedId] = useState<number>(-1);
+
+    const { data, refetch } = useGetAllProductionQuery();
+    const { mutate: onDelete } = useDeleteProductionMutation(deletedId, {
+        onSuccess: () => {
+            toast({
+                title: "Data berhasil dihapus",
+                variant: "success"
+            });
+            refetch();
+        },
+        onError: () => {
+            toast({
+                title: "Data gagal dihapus",
+                variant: "destructive"
+            })
+        }
+    });
+
+    const deleteHandler = (id: number) => {
+        event?.preventDefault();
+        setDeletedId(id);
+        onDelete();
+    };
+
+    useEffect(() => {
+        refetch();
+    }, [data, refetch]);
     return (
         <>
             <div className="flex items-center justify-between">
@@ -32,11 +66,11 @@ function WasteHouseProduction() {
                         </tr>
                     </thead>
                     <tbody>
-                        {[1, 2, 3].map(num => (
-                            <tr key={num} className="border-b bg-white">
-                                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-center">1</td>
-                                <td className="px-6 py-4 text-center">12/12/1212</td>
-                                <td className="px-6 py-4 text-center">10</td>
+                        {data?.data.map((production: productionType, index: number) => (
+                            <tr key={production.id} className="border-b bg-white">
+                                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-center">{index + 1}</td>
+                                <td className="px-6 py-4 text-center">{production.date}</td>
+                                <td className="px-6 py-4 text-center">{production.amount}</td>
                                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                                     <Link
                                         to={`/wastehouse/production/${1}`}
@@ -45,16 +79,12 @@ function WasteHouseProduction() {
                                         <BiSolidShow color="white" size={20} />
                                     </Link>
                                     <Link
-                                        to={`/wastehouse/production/edit/${1}`}
+                                        to={`/wastehouse/production/edit/${production.id}`}
                                         className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1"
                                     >
                                         <BiSolidEdit color="white" size={20} />
                                     </Link>
-                                    <Button
-                                        className="m-auto w-fit h-fit cursor-pointer rounded-lg bg-red-500 p-1"
-                                    >
-                                        <BiSolidTrash color="white" size={20} />
-                                    </Button>
+                                    <DeleteModal deleteHandler={() => deleteHandler(production.id)} />
                                 </td>
                             </tr>
                         )
