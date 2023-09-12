@@ -1,7 +1,63 @@
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom"
+import { useToast } from "@/components/ui/use-toast";
+import { useGetUserByIdQuery, useUpdateUserMutation } from "@/hooks/admin/user"
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom"
+
+function getRoleId(role: string | undefined) {
+    if (role === "ADMIN") return 1;
+    else if (role === "USER_CAFE") return 2;
+    else if (role === "USER_WORKSHOP") return 3;
+    else if (role === "USER_WASTE_HOUSE") return 4;
+    else return -1;
+};
 
 function UserEdit() {
+    const { id } = useParams();
+    const { toast } = useToast();
+    const navigate = useNavigate();
+
+    const [name, setName] = useState<string>();
+    const [identifier, setIdentifier] = useState<string>();
+    const [email, setEmail] = useState<string>();
+    const [role, setRole] = useState<number>();
+
+    const { data, refetch } = useGetUserByIdQuery(id);
+    const { mutate: onUpdate } = useUpdateUserMutation(id, {
+        name: name,
+        identifier: identifier,
+        email: email,
+        role_id: role,
+        password: undefined
+    }, {
+        onSuccess: () => {
+            toast({
+                title: "Data berhasil diupdate",
+                variant: "success"
+            });
+            navigate("/admin");
+        },
+        onError: () => {
+            toast({
+                title: "Data gagal diupdate",
+                variant: "destructive"
+            });
+            navigate("/admin/user");
+        }
+    });
+
+    const updateHandler = () => {
+        event?.preventDefault();
+        onUpdate();
+    };
+
+    useEffect(() => {
+        refetch();
+        setName(data?.data.name);
+        setIdentifier(data?.data.identifier);
+        setEmail(data?.data.email);
+        setRole(getRoleId(data?.data.role));
+    }, [data, refetch]);
     return (
         <>
             <div className="mb-3 flex items-center gap-3">
@@ -12,7 +68,7 @@ function UserEdit() {
                 </Link>
                 <h1 className="text-xl font-semibold">Edit User</h1>
             </div>
-            <form className="flex flex-col gap-8">
+            <form className="flex flex-col gap-8" onSubmit={updateHandler}>
                 <div>
                     <p className="mb-2 text-base">Name</p>
                     <input
@@ -20,6 +76,8 @@ function UserEdit() {
                         type="text"
                         id="name"
                         name="name"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
                     />
                 </div>
                 <div>
@@ -29,6 +87,8 @@ function UserEdit() {
                         type="text"
                         id="identifier"
                         name="identifier"
+                        value={identifier}
+                        onChange={e => setIdentifier(e.target.value)}
                     />
                 </div>
                 <div>
@@ -38,6 +98,8 @@ function UserEdit() {
                         type="email"
                         id="email"
                         name="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
                 </div>
                 <div>
@@ -46,10 +108,13 @@ function UserEdit() {
                         className="h-full w-full rounded-lg border border-gray-200 p-3 md:p-4"
                         name="role"
                         id="role"
+                        value={role}
+                        onChange={e => setRole(Number(e.target.value))}
                     >
-                        <option value="cafe">Cafe</option>
-                        <option value="workshop">Bengkel</option>
-                        <option value="wastehouse">Rumah Limbah</option>
+                        <option value={1}>Admin</option>
+                        <option value={2}>Cafe</option>
+                        <option value={3}>Bengkel</option>
+                        <option value={4}>Rumah Limbah</option>
                     </select>
                 </div>
                 <Button

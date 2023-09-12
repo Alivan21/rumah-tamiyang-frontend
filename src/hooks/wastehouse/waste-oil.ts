@@ -36,13 +36,12 @@ export const useDeleteWasteOilMutation = ({ onSuccess, onError }: mutationProps,
 };
 
 export const useAddWasteOilMutation = ({ onSuccess, onError }: mutationProps, body?: wasteoilBodyProps) => {
+    const formData = new FormData();
     return useMutation({
         mutationKey: ["mutation-wasteoil-create"],
         mutationFn: async () => {
             event?.preventDefault();
-            const res = await httpClient.post("/waste-house/oil-waste", {
-                ...body
-            });
+            const res = await httpClient.post("/waste-house/oil-waste", formData);
             return res;
         },
         onSuccess,

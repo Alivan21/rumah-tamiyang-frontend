@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { useDeleteUserMutation, useGetUsersListQuery } from "@/hooks/admin/user";
 import { useState } from "react";
-import { BiSolidEdit, BiSolidPlusCircle, BiSolidTrash } from "react-icons/bi";
+import { BiSolidEdit, BiSolidPlusCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 function AdminUser() {
@@ -70,7 +70,7 @@ function AdminUser() {
                                 <td className="px-6 py-4">{data.role}</td>
                                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                                     <Link
-                                        to={`/admin/user/edit/${1}`}
+                                        to={`/admin/user/edit/${data.id}`}
                                         className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1"
                                     >
                                         <BiSolidEdit color="white" size={20} />

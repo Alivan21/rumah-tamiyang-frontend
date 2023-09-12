@@ -61,14 +61,14 @@ function WasteHouseCharging() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data?.data.map((data, index: number) => (
+                        {data?.map((data, index: number) => (
                             <tr key={data.id} className="border-b bg-white">
                                 <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-center">{index + 1}</td>
                                 <td className="px-6 py-4 text-center">{new Date(data.date).toLocaleDateString()}</td>
                                 <td className="px-6 py-4 text-center">{data.amount}</td>
                                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                                     <Link
-                                        to={`/wastehouse/charging/edit/${1}`}
+                                        to={`/wastehouse/charging/edit/${data.id}`}
                                         className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1"
                                     >
                                         <BiSolidEdit color="white" size={20} />

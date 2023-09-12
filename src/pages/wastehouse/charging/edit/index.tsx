@@ -1,9 +1,61 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
+import { useGetChargingByIdQuery, useUpdateChargingMutation } from "@/hooks/wastehouse/charging";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function WasteHouseChargingEdit() {
-  return (
-    <>
+    const { id } = useParams();
+    const { toast } = useToast();
+    const navigate = useNavigate();
+
+    const [amount, setAmount] = useState<number>(0);
+    const [day, setDay] = useState<string | undefined>();
+    const [month, setMonth] = useState<string | undefined>();
+    const [year, setYear] = useState<string | undefined>();
+
+    const { data, refetch } = useGetChargingByIdQuery(id);
+    const { mutate: onUpdateCharging } = useUpdateChargingMutation(id, {
+        amount: amount,
+        date: `${year}-${month}-${day}`
+    }, {
+        onSuccess: () => {
+            toast({
+                title: "Data berhasil diupdate",
+                variant: "success"
+            });
+            navigate("/wastehouse/charging");
+        },
+        onError: () => {
+            toast({
+                title: "Data gagal diupdate",
+                variant: "destructive"
+            });
+            navigate("/wastehouse/charging");
+        }
+    })
+
+    const getDateArr = (date: string) => {
+        if (!date) return "";
+        const dateArr = date.split("-");
+        return dateArr;
+    };
+
+    const updateHandler = () => {
+        event?.preventDefault();
+        onUpdateCharging();
+    };
+
+    useEffect(() => {
+        refetch();
+        setAmount(data?.data.amount);
+        setDay(getDateArr(data?.data.date)[2]);
+        setMonth(getDateArr(data?.data.date)[1]);
+        setYear(getDateArr(data?.data.date)[0]);
+    }, [data, refetch]);
+
+    return (
+        <>
             <div className="mb-3 flex items-center gap-3">
                 <Link to="/wastehouse/charging">
                     <Button className=" rounded-full p-3">
@@ -12,7 +64,7 @@ function WasteHouseChargingEdit() {
                 </Link>
                 <h1 className="text-xl font-semibold">Tambah Frekuensi Charging LCA Energy Box</h1>
             </div>
-            <form className="flex flex-col gap-8">
+            <form className="flex flex-col gap-8" onSubmit={updateHandler}>
                 <div>
                     <div className="flex justify-between gap-2 lg:gap-4">
                         <div className="flex w-1/4 flex-col gap-2">
@@ -21,9 +73,11 @@ function WasteHouseChargingEdit() {
                             </label>
                             <input
                                 className="block w-full rounded-lg border border-gray-200 p-3 md:p-4"
-                                type="number"
+                                type="string"
                                 id="tanggal"
                                 name="day"
+                                value={day}
+                                onChange={e => setDay(e.target.value)}
                             />
                         </div>
                         <div className="flex w-1/2 flex-col gap-2">
@@ -34,6 +88,8 @@ function WasteHouseChargingEdit() {
                                 className="h-full rounded-lg border border-gray-200 p-3 md:p-4"
                                 name="month"
                                 id="month"
+                                value={month}
+                                onChange={e => setMonth(e.target.value)}
                             >
                                 <option value="01">Januari</option>
                                 <option value="02">Februari</option>
@@ -55,9 +111,11 @@ function WasteHouseChargingEdit() {
                             </label>
                             <input
                                 className="block rounded-lg border border-gray-200 p-3 md:p-4"
-                                type="number"
+                                type="string"
                                 id="year"
                                 name="year"
+                                value={year}
+                                onChange={e => setYear(e.target.value)}
                             />
                         </div>
                     </div>
@@ -71,6 +129,8 @@ function WasteHouseChargingEdit() {
                                 type="number"
                                 id="charging"
                                 name="charging"
+                                value={amount}
+                                onChange={e => setAmount(Number(e.target.value))}
                             />
                             <p>Box</p>
                         </div>
@@ -83,7 +143,7 @@ function WasteHouseChargingEdit() {
                 </Button>
             </form>
         </>
-  )
+    )
 }
 
 export default WasteHouseChargingEdit;

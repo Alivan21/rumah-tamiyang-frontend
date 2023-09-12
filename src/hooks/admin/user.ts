@@ -1,5 +1,6 @@
 import { httpClient } from "@/utils/http";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { Blob } from 'buffer';
 
 type mutationProps = {
     onSuccess: () => void;
@@ -7,11 +8,11 @@ type mutationProps = {
 };
 
 type addUserBodyProps = {
-    name: string;
-    identifier: string;
-    password: string;
-    email: string;
-    role_id: string;
+    name: string | undefined;
+    identifier: string | undefined;
+    password: string | undefined;
+    email: string | undefined;
+    role_id: number | undefined;
 };
 
 export function useGetUsersListQuery() {
@@ -39,7 +40,7 @@ export function usePostUserMutation({ onSuccess, onError }: mutationProps, body:
     });
 };
 
-export function useDeleteUserMutation({onSuccess, onError}: mutationProps, id: number) {
+export function useDeleteUserMutation({ onSuccess, onError }: mutationProps, id: number) {
     return useMutation({
         mutationKey: ["delete-user-mutation"],
         mutationFn: async () => {
@@ -49,6 +50,40 @@ export function useDeleteUserMutation({onSuccess, onError}: mutationProps, id: n
         onSuccess,
         onError
     })
+};
+
+export function useGetUserByIdQuery(id: string | undefined) {
+    return useQuery({
+        queryKey: [`user-${id}`],
+        queryFn: async () => {
+            const res = await httpClient.get(`/admin/${id}`);
+            return res.data;
+        }
+    })
+};
+
+export function useUpdateUserMutation(id: string | undefined, body: addUserBodyProps, { onSuccess, onError }: mutationProps) {
+    const formData = new FormData();
+    const { name, identifier, email, role_id, password } = body;
+    formData.append("name", name);
+    formData.set("identifier", identifier?.toString());
+    formData.set("email", email?.toString());
+    formData.set("role_id", role_id);
+    formData.set("password", password?.toString());
+
+    // name: name,
+    // identifier: identifier,
+    // email: email,
+    // role_id: role,
+    // password: undefined
+    return useMutation({
+        mutationFn: async () => {
+            const res = await httpClient.put(`admin/${id}`, formData);
+            return res;
+        },
+        onSuccess,
+        onError
+    });
 };
 
 // export function useGetUserByIdQuery(id: number) {

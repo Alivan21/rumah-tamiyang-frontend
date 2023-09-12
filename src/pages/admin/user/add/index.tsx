@@ -12,7 +12,7 @@ function AddUser() {
     const [identifier, setIdentifier] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [roleId, setRoleId] = useState<string>("1");
+    const [roleId, setRoleId] = useState<number>(1);
 
     const { mutate } = usePostUserMutation({
         onSuccess: () => {
@@ -87,12 +87,12 @@ function AddUser() {
                         name="role"
                         id="role"
                         value={roleId}
-                        onChange={e => setRoleId(e.target.value)}
+                        onChange={e => setRoleId(Number(e.target.value))}
                     >
-                        <option value="1">Admin</option>
-                        <option value="2">Cafe</option>
-                        <option value="3">Bengkel</option>
-                        <option value="4">Rumah Limbah</option>
+                        <option value={1}>Admin</option>
+                        <option value={2}>Cafe</option>
+                        <option value={3}>Bengkel</option>
+                        <option value={4}>Rumah Limbah</option>
                     </select>
                 </div>
                 <div>

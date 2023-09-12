@@ -6,6 +6,11 @@ type mutationProps = {
     onError: () => void;
 };
 
+type postBodyProps = {
+    amount: number;
+    date: string;
+};
+
 export function useGetChargingQuery() {
     return useQuery({
         queryKey: ["waste-house-charging"],
@@ -27,4 +32,27 @@ export function useDeleteChargingMutation({ onSuccess, onError }: mutationProps,
         onSuccess,
         onError
     })
+};
+
+export function useGetChargingByIdQuery(id: string | undefined) {
+    return useQuery({
+        queryKey: [`charging-${id}`],
+        queryFn: async () => {
+            const res = await httpClient.get(`/waste-house/energy-box/${id}`);
+            return res.data;
+        }
+    })
+};
+
+export function useUpdateChargingMutation(id: string | undefined, body: postBodyProps, { onSuccess, onError }: mutationProps) {
+    return useMutation({
+        mutationFn: async () => {
+            const res = await httpClient.put(`/waste-house/energy-box/${id}`, {
+                ...body
+            });
+            return res;
+        },
+        onSuccess,
+        onError
+    });
 };
