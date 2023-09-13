@@ -32,3 +32,13 @@ export function useDeleteWasteHouseIncomeMutation(id: number, { onSuccess, onErr
         onError
     })
 };
+
+export function useGetWasteHouseIncomeByIdQuery(id: string | undefined) {
+    return useQuery({
+        queryKey: [`wastehouse-income-${id}`],
+        queryFn: async () => {
+            const res = await httpClient.get(`/waste-house/income/${id}`);
+            return res.data;
+        }
+    });
+};

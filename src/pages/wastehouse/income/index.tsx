@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { BiSolidPlusCircle, BiSolidShow, BiSolidEdit, BiSolidTrash } from "react-icons/bi";
+import { BiSolidPlusCircle, BiSolidShow, BiSolidEdit } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { incomeType, useDeleteWasteHouseIncomeMutation, useGetAllWasteHouseIncomeQuery } from "@/hooks/wastehouse/income";
 import { useToast } from "@/components/ui/use-toast";
@@ -71,7 +71,7 @@ function WasteHouseIncome() {
                                 <td className="px-6 py-4 text-center">Rp{ income.amount }</td>
                                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                                     <Link
-                                        to={`/wastehouse/income/${1}`}
+                                        to={`/wastehouse/income/${income.id}`}
                                         className="m-auto w-fit cursor-pointer rounded-lg bg-green-500 p-1"
                                     >
                                         <BiSolidShow color="white" size={20} />

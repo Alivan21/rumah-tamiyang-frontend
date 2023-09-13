@@ -2,7 +2,7 @@ import DeleteModal from "@/components/modals/DeleteModal";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { useDeleteWasteOilMutation, useGetWasteOilQuery } from "@/hooks/wastehouse/waste-oil";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSolidEdit, BiSolidPlusCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 

@@ -10,6 +10,7 @@ export type productionType = {
     id: number;
     date: string;
     amount: number;
+    wasteHouseList: string[]; // temporary data type
 };
 
 export function useGetAllProductionQuery() {
@@ -30,5 +31,15 @@ export function useDeleteProductionMutation(id: string | number, {onSuccess, onE
         },
         onSuccess,
         onError
+    });
+};
+
+export function useGetProductionByIdQuery(id: string | undefined) {
+    return useQuery({
+        queryKey: [`wastehouse-production-${id}`],
+        queryFn: async () => {
+            const res = await httpClient.get(`/waste-house/production/${id}`);
+            return res.data;
+        }
     });
 };

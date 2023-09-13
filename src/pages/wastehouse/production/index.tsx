@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { productionType, useDeleteProductionMutation, useGetAllProductionQuery } from "@/hooks/wastehouse/production";
 import { useEffect, useState } from "react";
-import { BiSolidEdit, BiSolidPlusCircle, BiSolidShow, BiSolidTrash } from "react-icons/bi";
+import { BiSolidEdit, BiSolidPlusCircle, BiSolidShow } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 function WasteHouseProduction() {
@@ -73,7 +73,7 @@ function WasteHouseProduction() {
                                 <td className="px-6 py-4 text-center">{production.amount}</td>
                                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                                     <Link
-                                        to={`/wastehouse/production/${1}`}
+                                        to={`/wastehouse/production/${production.id}`}
                                         className="m-auto w-fit cursor-pointer rounded-lg bg-green-500 p-1"
                                     >
                                         <BiSolidShow color="white" size={20} />

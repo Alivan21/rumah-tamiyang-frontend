@@ -14,7 +14,7 @@ function AddUser() {
     const [password, setPassword] = useState<string>("");
     const [roleId, setRoleId] = useState<number>(1);
 
-    const { mutate } = usePostUserMutation({
+    const { mutate: onAddUser } = usePostUserMutation({
         onSuccess: () => {
             toast({
                 title: "Data Berhasil ditambah",
@@ -24,7 +24,7 @@ function AddUser() {
         },
         onError: () => {
             toast({
-                title: "Data gagal dihapus",
+                title: "Data gagal ditambahkan",
                 variant: "destructive"
             });
             navigate("/admin/user");
@@ -35,7 +35,12 @@ function AddUser() {
         email: email,
         role_id: roleId,
         password: password
-    })
+    });
+
+    const addUserHandler = () => {
+        event?.preventDefault();
+        onAddUser();
+    };
     return (
         <>
             <div className="mb-3 flex items-center gap-3">
@@ -46,7 +51,7 @@ function AddUser() {
                 </Link>
                 <h1 className="text-xl font-semibold">Tambah User</h1>
             </div>
-            <form className="flex flex-col gap-8" onSubmit={mutate}>
+            <form className="flex flex-col gap-8" onSubmit={addUserHandler}>
                 <div>
                     <p className="mb-2 text-base">Name</p>
                     <input

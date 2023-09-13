@@ -28,14 +28,13 @@ function UserEdit() {
         identifier: identifier,
         email: email,
         role_id: role,
-        password: undefined
     }, {
         onSuccess: () => {
             toast({
                 title: "Data berhasil diupdate",
                 variant: "success"
             });
-            navigate("/admin");
+            navigate("/admin/user");
         },
         onError: () => {
             toast({

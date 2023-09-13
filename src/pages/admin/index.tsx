@@ -1,6 +1,10 @@
+import { Link } from "react-router-dom";
+
 function AdminBridge() {
   return (
-    <div>AdminBridge</div>
+    <div>
+      <Link to={"/"}></Link>
+    </div>
   )
 }
 
