@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { incomeType, useDeleteWasteHouseIncomeMutation, useGetAllWasteHouseIncomeQuery } from "@/hooks/wastehouse/income";
 import { useToast } from "@/components/ui/use-toast";
 import DeleteModal from "@/components/modals/DeleteModal";
+import { currencyFormatter } from "@/utils/currency-helper";
 
 function WasteHouseIncome() {
     const { toast } = useToast();
@@ -68,7 +69,7 @@ function WasteHouseIncome() {
                             <tr key={income.id} className="border-b bg-white">
                                 <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-center">{ index+1 }</td>
                                 <td className="px-6 py-4 text-center">{ income.date }</td>
-                                <td className="px-6 py-4 text-center">Rp{ income.income }</td>
+                                <td className="px-6 py-4 text-center">Rp{ currencyFormatter(income.income) }</td>
                                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                                     <Link
                                         to={`/wastehouse/income/${income.id}`}

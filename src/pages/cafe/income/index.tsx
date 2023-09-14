@@ -3,6 +3,7 @@ import { BiSolidEdit, BiSolidPlusCircle } from "react-icons/bi";
 import { Button } from "@/components/ui/button";
 import DeleteModal from "@/components/modals/DeleteModal";
 import { cafeIncome, useDeleteCafeIncome, useGetCafeIncomes } from "@/hooks/cafe";
+import { currencyFormatter } from "@/utils/currency-helper";
 
 function Income() {
   const { data } = useGetCafeIncomes();
@@ -48,13 +49,13 @@ function Income() {
                 <td className="px-6 py-4 font-medium text-gray-900">{index + 1}</td>
                 <td className="whitespace-nowrap px-6 py-4">{income.date.split("T")[0]}</td>
                 <td className="whitespace-nowrap px-6 py-4">
-                  Rp. {income.sale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                  Rp. {currencyFormatter(income.sale)}
                 </td>
                 <td className="whitespace-nowrap px-6 py-4">
-                  Rp. {income.purchase.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                  Rp. {currencyFormatter(income.purchase)}
                 </td>
                 <td className="whitespace-nowrap px-6 py-4">
-                  Rp. {income.income.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                  Rp. {currencyFormatter(income.income)}
                 </td>
                 <td className="m-auto mt-2 flex w-fit items-center gap-3">
                   <DeleteModal
