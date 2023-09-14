@@ -33,18 +33,14 @@ import AdminDashboard from "@/pages/admin/dashboard";
 import AdminUser from "@/pages/admin/user";
 import AddUser from "@/pages/admin/user/add";
 import UserEdit from "@/pages/admin/user/edit";
+import WorkshopOil from "@/pages/workshop/oil";
+import AddOil from "@/pages/workshop/oil/add";
+import EditOil from "@/pages/workshop/oil/edit";
 
 export function AppRoutes() {
   return (
     <Routes>
       <Route index element={<Login />} />
-      <Route element={<WorkshopLayout />} path="workshop">
-        <Route index element={<WorkshopDashboard />} />
-        <Route path="income" element={<WorkshopIncome />} />
-        <Route path="income/add" element={<AddIncomeWorkshop />} />
-        <Route path="income/:id" element={<WorkshopIncomeDetail />} />
-        <Route path="income/edit/:id" element={<WorkshopEditIncome />} />
-      </Route>
       <Route element={<PrivateRoutesGuard />}>
         <Route element={<CafeLayout />} path="cafe">
           <Route index element={<Dashboard />} />
@@ -53,6 +49,16 @@ export function AppRoutes() {
             <Route path="add" element={<AddIncome />} />
             <Route path="edit/:id" element={<EditCafeIncome />} />
           </Route>
+        </Route>
+        <Route element={<WorkshopLayout />} path="workshop">
+          <Route index element={<WorkshopDashboard />} />
+          <Route path="income" element={<WorkshopIncome />} />
+          <Route path="income/add" element={<AddIncomeWorkshop />} />
+          <Route path="income/:id" element={<WorkshopIncomeDetail />} />
+          <Route path="income/edit/:id" element={<WorkshopEditIncome />} />
+          <Route path="oil" element={<WorkshopOil />} />
+          <Route path="oil/add" element={<AddOil />} />
+          <Route path="oil/edit/:id" element={<EditOil />} />
         </Route>
         <Route element={<WasteHouseLayout />} path="wastehouse">
           <Route index element={<WasteHouse />} />

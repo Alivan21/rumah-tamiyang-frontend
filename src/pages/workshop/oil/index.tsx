@@ -1,16 +1,20 @@
 import DeleteModal from "@/components/modals/DeleteModal";
 import { Button } from "@/components/ui/button";
-import { BiSolidEdit, BiSolidPlusCircle, BiSolidShow } from "react-icons/bi";
+import { OilWasteResponse, useDeleteOilWaste, useGetAllOilWaste } from "@/hooks/workshop/oil-waste";
+import { BiSolidEdit, BiSolidPlusCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-function WorkshopIncome() {
+function WorkshopOil() {
+  const { data } = useGetAllOilWaste();
+  const { mutateAsync: deleteOil } = useDeleteOilWaste();
+
   return (
     <>
       <div className="relative flex items-center justify-between">
-        <h2 className="p-2 text-lg font-semibold">Daftar Pendapatan</h2>
-        <Link to="/workshop/income/add">
+        <h2 className="p-2 text-lg font-semibold">Daftar Limbah Oli</h2>
+        <Link to="/workshop/oil/add">
           <Button className="hidden rounded-lg bg-primary px-4 py-2 text-white lg:block">
-            + Tambah Data Pendapatan
+            + Tambah Data Limbah Oli
           </Button>
         </Link>
       </div>
@@ -25,13 +29,10 @@ function WorkshopIncome() {
                 Tanggal
               </th>
               <th scope="col" className="px-6 py-3 text-center">
-                Pendapatan
+                Oli Terkumpul
               </th>
               <th scope="col" className="px-6 py-3 text-center">
-                Pengeluaran
-              </th>
-              <th scope="col" className="px-6 py-3 text-center">
-                Keuntungan
+                Oli Keluar
               </th>
               <th scope="col" className="px-6 py-3 text-center">
                 Action
@@ -39,28 +40,21 @@ function WorkshopIncome() {
             </tr>
           </thead>
           <tbody>
-            {[1, 2, 3, 4, 5, 6].map(num => (
-              <tr key={num} className="border-b bg-white">
-                <td className="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900">{num}</td>
-                <td className="px-6 py-4 text-center">28 Agustus 2023</td>
-                <td className="px-6 py-4 text-center">Rp1,200,000</td>
-                <td className="px-6 py-4 text-center">Rp300,000</td>
-                <td className="px-6 py-4 text-center">30%</td>
-                <td className="flex items-center gap-2 px-6 py-4 lg:gap-0">
-                  <Link
-                    to={`/workshop/income/${num}`}
-                    className="m-auto block w-fit cursor-pointer rounded-lg bg-primary p-1"
-                  >
-                    <BiSolidShow size={20} color="white" />
-                  </Link>
+            {data?.map((oil: OilWasteResponse, index: number) => (
+              <tr key={oil.id} className="border-b bg-white">
+                <td className="px-6 py-4 font-medium text-gray-900">{index + 1}</td>
+                <td className="whitespace-nowrap px-6 py-4">{oil.date.split("T")[0]}</td>
+                <td className="whitespace-nowrap px-6 py-4">{oil.oil_collects} Box</td>
+                <td className="whitespace-nowrap px-6 py-4">{oil.oil_out} Box</td>
+                <td className="m-auto mt-2 flex w-fit items-center gap-3">
                   <DeleteModal
-                    key={num}
-                    deleteHandler={function (): void {
-                      throw new Error("Function not implemented.");
+                    key={oil.id}
+                    deleteHandler={async () => {
+                      await deleteOil(oil.id);
                     }}
                   />
                   <Link
-                    to={`/workshop/income/edit/${num}`}
+                    to={`/workshop/oil/edit/${oil.id}`}
                     className="m-auto w-fit cursor-pointer rounded-lg bg-blue-600 p-1"
                   >
                     <BiSolidEdit color="white" size={20} />
@@ -70,7 +64,7 @@ function WorkshopIncome() {
             ))}
           </tbody>
         </table>
-        <Link to="/workshop/income/add" className="fixed bottom-1 right-1 rounded-full bg-white text-2xl lg:hidden">
+        <Link to="/workshop/oil/add" className="fixed bottom-1 right-1 rounded-full bg-white text-2xl lg:hidden">
           <BiSolidPlusCircle size={50} />
         </Link>
       </div>
@@ -78,4 +72,4 @@ function WorkshopIncome() {
   );
 }
 
-export default WorkshopIncome;
+export default WorkshopOil;

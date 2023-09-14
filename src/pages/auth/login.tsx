@@ -19,6 +19,8 @@ function Login() {
   useEffect(() => {
     if (jwtPayload?.role == "USER_CAFE") {
       navigate("/cafe");
+    } else if (jwtPayload?.role == "USER_WORKSHOP") {
+      navigate("/workshop");
     } else if (jwtPayload?.role === "USER_WASTE_HOUSE") {
       navigate("/wastehouse");
     } else if (jwtPayload?.role === "ADMIN") {
