@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 export type incomeType = {
     id: number;
     date: string;
-    amount: number;
+    income: number;
 };
 
 type mutationProps = {
