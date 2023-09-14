@@ -4,6 +4,7 @@ import { CafeIncomeRequest, useAddCafeIncome } from "@/hooks/cafe";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import CurrencyInput from "react-currency-input-field";
 
 function AddIncome() {
   const navigate = useNavigate();
@@ -19,7 +20,8 @@ function AddIncome() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setForm(prevState => ({ ...prevState, [name]: value }));
+    const parsedValue = value.replace(/[^\d.]/gi, "");
+    setForm(prevState => ({ ...prevState, [name]: parsedValue }));
   };
 
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -110,13 +112,11 @@ function AddIncome() {
           <p className="mb-2 text-base">Penjualan</p>
           <div className="flex items-center gap-2">
             <p className="text-base">Rp</p>
-            <input
-              className="w-full rounded-lg border border-gray-300 p-3"
-              type="number"
-              id="sale"
+            <CurrencyInput
+              className="w-full rounded-lg border border-gray-300 p-3" id="sale"
               name="sale"
               value={form.sale}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
@@ -124,10 +124,8 @@ function AddIncome() {
           <p className="mb-2 text-base">Pembelian</p>
           <div className="flex items-center gap-2">
             <p className="text-base">Rp</p>
-            <input
-              className="w-full rounded-lg border border-gray-300 p-3"
-              type="number"
-              id="purchase"
+            <CurrencyInput
+              className="w-full rounded-lg border border-gray-300 p-3" id="sale"
               name="purchase"
               value={form.purchase}
               onChange={handleChange}

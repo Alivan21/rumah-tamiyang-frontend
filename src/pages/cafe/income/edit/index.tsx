@@ -4,6 +4,7 @@ import { CafeIncomeRequest, useEditCafeIncome, useGetCafeIncomesById } from "@/h
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import CurrencyInput from "react-currency-input-field";
 
 function EditCafeIncome() {
   const { id } = useParams();
@@ -36,7 +37,8 @@ function EditCafeIncome() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setForm(prevState => ({ ...prevState, [name]: value }));
+    const parsedValue = value.replace(/[^\d.]/gi, "");
+    setForm(prevState => ({ ...prevState, [name]: parsedValue }));
   };
 
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -128,13 +130,11 @@ function EditCafeIncome() {
             <p className="mb-2 text-base">Penjualan</p>
             <div className="flex items-center gap-2">
               <p className="text-base">Rp</p>
-              <input
-                className="w-full rounded-lg border border-gray-300 p-3"
-                type="number"
-                id="sale"
-                name="sale"
-                value={form.sale}
-                onChange={handleChange}
+              <CurrencyInput 
+                className="w-full rounded-lg border border-gray-300 p-3" 
+                name="sale" 
+                value={form.sale} 
+                onChange={handleChange} 
               />
             </div>
           </div>
@@ -142,13 +142,11 @@ function EditCafeIncome() {
             <p className="mb-2 text-base">Pembelian</p>
             <div className="flex items-center gap-2">
               <p className="text-base">Rp</p>
-              <input
-                className="w-full rounded-lg border border-gray-300 p-3"
-                type="number"
-                id="purchase"
-                name="purchase"
+              <CurrencyInput 
+                className="w-full rounded-lg border border-gray-300 p-3" 
+                name="purchase" 
                 value={form.purchase}
-                onChange={handleChange}
+                onChange={handleChange} 
               />
             </div>
           </div>
